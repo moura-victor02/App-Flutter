@@ -1,16 +1,21 @@
+import 'package:app01/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import './home_page.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'dart:convert';
 
 void main() {
-  runApp(MainApp());
+  runApp(MyApp());
 }
 
-class MainApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      getPages: [GetPage(name: '/', page: () => Homepage())],
+    return MaterialApp(
+      title: 'Leitor de código de barras',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: HomePage(),
     );
   }
 }
