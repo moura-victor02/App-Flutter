@@ -1,12 +1,13 @@
 import 'dart:io';
+
+import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:convert/convert.dart';
 
 class ApiService {
-  final String apiUrl = 'https://exemplo.com/api/endpoint';
-
-  static const String failedHostLookupMessage = 'Falha na consulta de host';
-  static const String apiNotFoundMessage = 'API endpoint não encontrado';
+  final String apiUrl = 'http://www.example.com/d%C3%A9monstration.html';
+  static const String failedHostLookupMessage = 'Failed host lookup';
 
   Future<void> sendBarcodeData(String barcodeData) async {
     try {
@@ -23,8 +24,6 @@ class ApiService {
       }
     } on SocketException catch (_) {
       print(failedHostLookupMessage);
-    } on HttpException catch (_) {
-      print(apiNotFoundMessage);
     }
   }
 }
