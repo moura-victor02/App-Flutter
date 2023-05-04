@@ -1,9 +1,6 @@
 import 'dart:io';
-
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:convert/convert.dart';
 
 class ApiService {
   final String apiUrl = 'http://www.example.com/d%C3%A9monstration.html';

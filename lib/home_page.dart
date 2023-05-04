@@ -1,9 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:http/http.dart' as http;
 
 import 'api_service.dart';
 
@@ -16,9 +12,6 @@ class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
   final _apiService = ApiService();
 
-  Future<String> scanBarcode() async => await FlutterBarcodeScanner.scanBarcode(
-      '#ff6666', 'Cancelar', true, ScanMode.BARCODE);
-
   Future<void> sendDataToProtheus(String barcodeData) async {
     await _apiService.sendBarcodeData(barcodeData);
   }
@@ -27,51 +20,60 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inventário'),
+        title: Text('Gestão de Estoque'),
         centerTitle: true,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 16),
-            Container(
-              width: 200,
-              height: 60,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.blue, Colors.lightBlue],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-                borderRadius: BorderRadius.circular(24.0),
-              ),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BarcodeScannerPage(
-                        apiService: _apiService,
-                      ),
-                    ),
-                  );
-                },
-                child: Text(
-                  'Inventário',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.transparent,
-                  onPrimary: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24.0),
+        child: FractionallySizedBox(
+          widthFactor:
+              0.8, // define a largura do botão como 80% da largura disponível na tela
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BarcodeScannerPage(
+                    apiService: _apiService,
                   ),
                 ),
+              );
+            },
+            child: Container(
+              height: 80,
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.inventory,
+                    color: Colors.white,
+                    size: 36,
+                  ),
+                  SizedBox(width: 8),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Contador de',
+                        style: TextStyle(fontSize: 12, color: Colors.white),
+                      ),
+                      Text(
+                        'Inventário',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -80,6 +82,7 @@ class _HomePageState extends State<HomePage> {
 
 class BarcodeScannerPage extends StatefulWidget {
   final ApiService apiService;
+  final String cancelButtonText = 'Cancelar';
   BarcodeScannerPage({required this.apiService});
 
   @override
@@ -91,7 +94,11 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
   final _formKey = GlobalKey<FormState>();
 
   Future<String> scanBarcode() async => await FlutterBarcodeScanner.scanBarcode(
-      '#ff6666', 'Cancelar', true, ScanMode.BARCODE);
+        '#ff6666',
+        'Cancelar',
+        true,
+        ScanMode.BARCODE,
+      );
 
   Future<void> sendDataToProtheus(String barcodeData) async {
     await widget.apiService.sendBarcodeData(barcodeData);
@@ -109,6 +116,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
       appBar: AppBar(
         title: Text('Leitor de código de barras'),
         centerTitle: true,
+        leading: Icon(Icons.bar_chart),
       ),
       body: Center(
         child: Form(
@@ -146,44 +154,57 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
                     _barcodeController.clear();
                   }
                 },
-                child: Text('Enviar'),
+                child: Text('Salvar'),
               ),
-              SizedBox(height: 8),
+              SizedBox(height: 16),
               Container(
-                width: 200,
+                width: MediaQuery.of(context).size.width * 0.7,
                 height: 60,
                 decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(24.0),
                   gradient: LinearGradient(
                     colors: [Colors.blue, Colors.lightBlue],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),
-                  borderRadius: BorderRadius.circular(24.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 7,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
                 ),
-                child: ElevatedButton(
+                child: ElevatedButton.icon(
                   onPressed: () async {
                     String barcodeData = await scanBarcode();
-                    setState(() {
-                      _barcodeController.text = barcodeData;
-                    });
+                    if (barcodeData != '-1') {
+                      setState(() {
+                        _barcodeController.text = barcodeData;
+                      });
+                    } else {
+                      setState(() {
+                        _barcodeController.clear();
+                      });
+                    }
                   },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.qr_code_scanner,
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        'Ler código de barras',
-                        style: TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  icon: Icon(
+                    Icons.qr_code_scanner,
+                    color: Colors.white,
+                  ),
+                  label: Text(
+                    'Ler código de barras',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                   style: ElevatedButton.styleFrom(
                     primary: Colors.transparent,
-                    onPrimary: Colors.white,
+                    onPrimary: Colors.transparent,
+                    elevation: 0,
                     padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24.0),
