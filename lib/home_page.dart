@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                   Icon(
                     Icons.inventory,
                     color: Colors.white,
-                    size: 36,
+                    size: 47,
                   ),
                   SizedBox(width: 8),
                   Column(
@@ -58,13 +58,13 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Contador de',
-                        style: TextStyle(fontSize: 12, color: Colors.white),
+                        'Contabilizador de',
+                        style: TextStyle(fontSize: 17, color: Colors.white),
                       ),
                       Text(
                         'Inventário',
                         style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 20,
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
                       ),
@@ -130,7 +130,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
                   controller: _barcodeController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    labelText: 'Digite o código de barras',
+                    labelText: 'Digite o código ou utilize o botão de leitura',
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) {
@@ -141,6 +141,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
                   },
                 ),
               ),
+              SizedBox(height: 24),
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
@@ -154,9 +155,29 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
                     _barcodeController.clear();
                   }
                 },
-                child: Text('Salvar'),
+                style: ElevatedButton.styleFrom(
+                  elevation: 3,
+                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.save,
+                      size: 36,
+                      color: Colors.white,
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      'Salvar',
+                      style: TextStyle(fontSize: 17),
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 40),
               Container(
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: 60,
