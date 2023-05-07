@@ -8,12 +8,12 @@ class Contagem extends StatefulWidget {
 }
 
 class _ContagemState extends State<Contagem> {
-  void sendNumber(BuildContext context, int number) {
+  void sendNumber(BuildContext context, int index) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => BarcodeScannerPage(
-          barcodeNumber: number,
+          barcodeNumber: index + 1, // número do botão clicado (1, 2 ou 3)
           apiService: ApiService(),
         ),
       ),
@@ -42,11 +42,10 @@ class _ContagemState extends State<Contagem> {
       'textColor': Colors.white,
     },
   ];
-  
+
   Future<void> sendDataToProtheus(String barcodeData) async {
     await _apiService.sendBarcodeData(barcodeData);
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +81,7 @@ class _ContagemState extends State<Contagem> {
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
-                      sendNumber(context, 1);
+                      sendNumber(context, index);
                     },
                     child: Container(
                       height: 80,
