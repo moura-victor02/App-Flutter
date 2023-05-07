@@ -4,9 +4,10 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'api_service.dart';
 
 class BarcodeScannerPage extends StatefulWidget {
+  final int barcodeNumber;
   final ApiService apiService;
   final String cancelButtonText = 'Cancelar';
-  BarcodeScannerPage({required this.apiService});
+  BarcodeScannerPage({required this.apiService, required this.barcodeNumber});
 
   @override
   _BarcodeScannerPageState createState() => _BarcodeScannerPageState();
@@ -25,6 +26,12 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
 
   Future<void> sendDataToProtheus(String barcodeData) async {
     await widget.apiService.sendBarcodeData(barcodeData);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _barcodeController.text = widget.barcodeNumber.toString();
   }
 
   @override

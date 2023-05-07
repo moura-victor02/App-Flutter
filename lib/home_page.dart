@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'contagens.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:app01/page_scanner.dart';
 import 'api_service.dart';
-import 'contagens.dart';
 
 class HomePage extends StatefulWidget {
   @override
