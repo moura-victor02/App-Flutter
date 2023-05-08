@@ -43,8 +43,10 @@ class _ContagemState extends State<Contagem> {
     },
   ];
 
-  Future<void> sendDataToProtheus(String barcodeData) async {
-    await _apiService.sendBarcodeData(barcodeData);
+  Future<void> sendDataToProtheus(String contagem, String endereco,
+      String codigoProduto, String quantidade) async {
+    await _apiService.sendContagemData(
+        contagem, endereco, codigoProduto, quantidade);
   }
 
   @override

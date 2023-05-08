@@ -3,15 +3,25 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiService {
-  final String apiUrl = 'http://www.example.com/d%C3%A9monstration.html';
+  final String apiUrl = 'http://192.168.0.16:83/rest/SREST001';
   static const String failedHostLookupMessage = 'Failed host lookup';
 
-  Future<void> sendBarcodeData(String barcodeData) async {
+  Future<void> sendContagemData(String contagem, String endereco,
+      String codigoProduto, String quantidade) async {
     try {
-      final jsonData = jsonEncode({'barcode': barcodeData});
+      final jsonData = jsonEncode({
+        'Contagem': contagem,
+        'Endereço': endereco,
+        'Código': codigoProduto,
+        'Quantidade': quantidade
+      });
       final response = await http.post(
         Uri.parse(apiUrl),
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization':
+              'basic' + base64.encode(utf8.encode('usuario' + ':' + 'senha'))
+        },
         body: jsonData,
       );
       if (response.statusCode == 200) {

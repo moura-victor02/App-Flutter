@@ -15,17 +15,48 @@ class BarcodeScannerPage extends StatefulWidget {
 
 class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
   final _barcodeController = TextEditingController();
+  final _enderecoController = TextEditingController();
+  final _codigoProdutoController = TextEditingController();
+  final _quantidadeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  Future<String> scanBarcode() async => await FlutterBarcodeScanner.scanBarcode(
-        '#ff6666',
-        'Cancelar',
-        true,
-        ScanMode.BARCODE,
-      );
+  Future<void> scanBarcode() async {
+    String barcodeData = await FlutterBarcodeScanner.scanBarcode(
+      '#ff6666',
+      'Cancelar',
+      true,
+      ScanMode.BARCODE,
+    );
 
-  Future<void> sendDataToProtheus(String barcodeData) async {
-    await widget.apiService.sendBarcodeData(barcodeData);
+    if (barcodeData != '-1') {
+      String endereco = barcodeData.substring(0, 3);
+      String codigoProduto = barcodeData.substring(3, 11);
+      String quantidade = barcodeData.substring(11);
+
+      setState(() {
+        _enderecoController.text = endereco;
+        _codigoProdutoController.text = codigoProduto;
+        _quantidadeController.text = quantidade;
+      });
+    }
+  }
+
+  Future<void> sendDataToProtheus() async {
+    if (_formKey.currentState!.validate()) {
+      String contagem = _barcodeController.text;
+      String endereco = _enderecoController.text;
+      String codigoProduto = _codigoProdutoController.text;
+      String quantidade = _quantidadeController.text;
+
+      await widget.apiService
+          .sendContagemData(contagem, endereco, codigoProduto, quantidade);
+
+      setState(() {
+        _enderecoController.clear();
+        _codigoProdutoController.clear();
+        _quantidadeController.clear();
+      });
+    }
   }
 
   @override
@@ -37,6 +68,9 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
   @override
   void dispose() {
     _barcodeController.dispose();
+    _enderecoController.dispose();
+    _codigoProdutoController.dispose();
+    _quantidadeController.dispose();
     super.dispose();
   }
 
@@ -54,114 +88,73 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              CircleAvatar(
+                radius: 20.0,
+                backgroundColor: Colors.blue,
+                child: Text(
+                  _barcodeController.text,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextFormField(
-                  controller: _barcodeController,
-                  keyboardType: TextInputType.number,
+                  controller: _enderecoController,
                   decoration: InputDecoration(
-                    labelText: 'Digite o código ou utilize o botão de leitura',
+                    labelText: 'Endereço',
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Por favor, digite o código de barras';
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, insira o endereço';
                     }
                     return null;
                   },
                 ),
               ),
-              SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    await sendDataToProtheus(_barcodeController.text);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content:
-                            Text('Dados enviados para o Protheus com sucesso!'),
-                      ),
-                    );
-                    _barcodeController.clear();
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  elevation: 3,
-                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.save,
-                      size: 36,
-                      color: Colors.white,
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      'Salvar',
-                      style: TextStyle(fontSize: 17),
-                    ),
-                  ],
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextFormField(
+                  controller: _codigoProdutoController,
+                  decoration: InputDecoration(
+                    labelText: 'Código do Produto',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, insira o código do produto';
+                    }
+                    return null;
+                  },
                 ),
               ),
-              SizedBox(height: 40),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.7,
-                height: 60,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24.0),
-                  gradient: LinearGradient(
-                    colors: [Colors.blue, Colors.lightBlue],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextFormField(
+                  controller: _quantidadeController,
+                  decoration: InputDecoration(
+                    labelText: 'Quantidade',
+                    border: OutlineInputBorder(),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 7,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: ElevatedButton.icon(
-                  onPressed: () async {
-                    String barcodeData = await scanBarcode();
-                    if (barcodeData != '-1') {
-                      setState(() {
-                        _barcodeController.text = barcodeData;
-                      });
-                    } else {
-                      setState(() {
-                        _barcodeController.clear();
-                      });
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, insira a quantidade';
                     }
+                    return null;
                   },
-                  icon: Icon(
-                    Icons.qr_code_scanner,
-                    color: Colors.white,
-                  ),
-                  label: Text(
-                    'Ler código de barras',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.transparent,
-                    onPrimary: Colors.transparent,
-                    elevation: 0,
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24.0),
-                    ),
-                  ),
                 ),
+              ),
+              ElevatedButton(
+                onPressed: scanBarcode,
+                child: Text('Ler código de barras'),
+              ),
+              ElevatedButton(
+                onPressed: sendDataToProtheus,
+                child: Text('Enviar dados para Protheus'),
               ),
             ],
           ),
