@@ -11,7 +11,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gestão de Estoque'),
+        title: Text('Gerenciamento'),
         centerTitle: true,
       ),
       body: Center(

@@ -78,7 +78,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Leitor de código de barras'),
+        title: Text('Envio de Leituras'),
         centerTitle: true,
         leading: Icon(Icons.bar_chart),
       ),
