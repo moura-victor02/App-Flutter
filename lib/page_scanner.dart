@@ -148,20 +148,28 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
                   },
                 ),
               ),
-              ElevatedButton(
-                onPressed: scanBarcode,
-                child: Icon(Icons.qr_code, color: Colors.white),
-              ),
-              ElevatedButton(
-                onPressed: sendDataToProtheus,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.save, color: Colors.white),
-                    SizedBox(width: 8.0),
-                    Text('Salvar', style: TextStyle(color: Colors.white)),
-                  ],
-                ),
+              SizedBox(height: 40),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 80,
+                    height: 80,
+                    child: ElevatedButton(
+                      onPressed: scanBarcode,
+                      child: Icon(Icons.qr_code, color: Colors.white, size: 45),
+                    ),
+                  ),
+                  SizedBox(width: 15),
+                  SizedBox(
+                    width: 80,
+                    height: 80,
+                    child: ElevatedButton(
+                      onPressed: sendDataToProtheus,
+                      child: Icon(Icons.save, color: Colors.white, size: 45),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
