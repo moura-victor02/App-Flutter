@@ -11,16 +11,16 @@ class ApiService {
     try {
       final jsonData = jsonEncode({
         'Contagem': contagem,
-        'Endereço': endereco,
-        'Código': codigoProduto,
+        'Endereco': endereco,
+        'Codigo': codigoProduto,
         'Quantidade': quantidade
       });
       final response = await http.post(
         Uri.parse(apiUrl),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization':
-              'basic' + base64.encode(utf8.encode('usuario' + ':' + 'senha'))
+          'Authorization': 'basic ' +
+              base64.encode(utf8.encode('Enzo Victor' + ':' + 'J#102424j'))
         },
         body: jsonData,
       );
@@ -29,8 +29,14 @@ class ApiService {
       } else {
         print('Erro ao enviar os dados do código de barras.');
       }
-    } on SocketException catch (_) {
-      print(failedHostLookupMessage);
+    } on SocketException catch (e) {
+      print('Erro de socket: $e');
+    } on HttpException catch (e) {
+      print('Erro de HTTP: $e');
+    } on FormatException catch (e) {
+      print('Formato inválido: $e');
+    } catch (e) {
+      print('Erro inesperado: $e');
     }
   }
 }

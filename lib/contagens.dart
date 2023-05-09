@@ -32,13 +32,13 @@ class _ContagemState extends State<Contagem> {
     {
       'text': 'Contagem 2',
       'icon': Icons.inventory,
-      'color': Colors.green,
+      'color': Colors.blue,
       'textColor': Colors.white,
     },
     {
       'text': 'Contagem 3',
       'icon': Icons.inventory,
-      'color': Colors.purple,
+      'color': Colors.blue,
       'textColor': Colors.white,
     },
   ];
