@@ -20,7 +20,6 @@ class _ContagemState extends State<Contagem> {
     );
   }
 
-  final _formKey = GlobalKey<FormState>();
   final _apiService = ApiService();
   final List<Map<String, dynamic>> buttons = [
     {
