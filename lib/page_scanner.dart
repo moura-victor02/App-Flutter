@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-
 import 'api_service.dart';
 
+/*classe que estende StatefulWidget, que representa a pagina de digitalização do codigo de barras.
+  O campo apiService é uma instância da classe ApiService
+  O campo cancelButtonText é uma string que é usada como o texto do botão Cancelar quando a digitalização é iniciada.
+  */
 class BarcodeScannerPage extends StatefulWidget {
   final int barcodeNumber;
   final ApiService apiService;
@@ -13,12 +16,25 @@ class BarcodeScannerPage extends StatefulWidget {
   _BarcodeScannerPageState createState() => _BarcodeScannerPageState();
 }
 
+//  Classe que possui propriedades para o endereço, código do produto e quantidade  //
+class CodigoData {
+  final String endereco;
+  final String codigoProduto;
+  final String quantidade;
+
+  CodigoData(this.endereco, this.codigoProduto, this.quantidade);
+}
+
+/*Ele define quatro controladores de texto para os campos de entrada de contagem, endereço, código
+ do produto e quantidade*/
 class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
   final _barcodeController = TextEditingController();
   final _enderecoController = TextEditingController();
   final _codigoProdutoController = TextEditingController();
   final _quantidadeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  CodigoData _codigoData = CodigoData('', '', '');
 
   Future<void> scanBarcode() async {
     String barcodeData = await FlutterBarcodeScanner.scanBarcode(
@@ -27,13 +43,16 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
       true,
       ScanMode.BARCODE,
     );
-
+/*são extraídas as substrings que representam o endereço, o código do produto e a quantidade, respectivamente.
+ O método substring é usado para extrair essas informações a partir da string barcodeData*/
     if (barcodeData != '-1') {
       String endereco = barcodeData.substring(0, 3);
       String codigoProduto = barcodeData.substring(3, 11);
       String quantidade = barcodeData.substring(11);
 
       setState(() {
+        // instância da classe CodigoData, atualiza sempre que os dados do código de barras forem lidos//
+        _codigoData = CodigoData(endereco, codigoProduto, quantidade);
         _enderecoController.text = endereco;
         _codigoProdutoController.text = codigoProduto;
         _quantidadeController.text = quantidade;
@@ -41,12 +60,15 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
     }
   }
 
+/*método assíncrono que envia os dados da contagem para o sistema Protheus usando a API fornecida.
+Inicia validando o formulário atual e, se for válido, ele extrai as informações relevantes das variáveis e 
+as passa para a API para enviar.*/
   Future<void> sendDataToProtheus() async {
     if (_formKey.currentState!.validate()) {
       String contagem = _barcodeController.text;
-      String endereco = _enderecoController.text;
-      String codigoProduto = _codigoProdutoController.text;
-      String quantidade = _quantidadeController.text;
+      String endereco = _codigoData.endereco;
+      String codigoProduto = _codigoData.codigoProduto;
+      String quantidade = _codigoData.quantidade;
 
       await widget.apiService
           .sendContagemData(contagem, endereco, codigoProduto, quantidade);
@@ -59,6 +81,8 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
     }
   }
 
+/*Usado para inicializar o valor do _barcodeController com o número do código de barras recebido como
+   parâmetro no construtor da classe BarcodeScannerPage*/
   @override
   void initState() {
     super.initState();
