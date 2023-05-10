@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:app01/page_scanner.dart';
+import 'package:app01/Inventario/page_scanner.dart';
 import 'api_service.dart';
 
 class Contagem extends StatefulWidget {

@@ -3,7 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiService {
-  final String apiUrl = 'http://192.168.0.16:83/rest/SREST001';
+  final String apiUrl =
+      'http://192.168.0.16:83/rest/SREST001****'; //adicionar o local de fato//
   static const String failedHostLookupMessage = 'Failed host lookup';
 
   Future<void> sendContagemData(String contagem, String endereco,

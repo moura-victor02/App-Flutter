@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'contagens.dart';
+import 'Inventario/contagens.dart';
 
 class HomePage extends StatefulWidget {
   @override
