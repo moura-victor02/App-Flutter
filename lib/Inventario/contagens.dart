@@ -55,6 +55,35 @@ class _ContagemState extends State<Contagem> {
         backgroundColor: Color.fromARGB(255, 63, 70, 73),
         title: Text('Contagem'),
         centerTitle: true,
+        leading: PopupMenuButton(
+          itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+            const PopupMenuItem(
+              value: 0,
+              child: Text('Opção 1'),
+            ),
+            const PopupMenuItem(
+              value: 1,
+              child: Text('Opção 2'),
+            ),
+            const PopupMenuItem(
+              value: 2,
+              child: Text('Opção 3'),
+            ),
+          ],
+          onSelected: (value) {
+            switch (value) {
+              case 0:
+                Navigator.pushNamed(context, '/novaTela');
+                break;
+              case 1:
+                // Lógica para a opção 2
+                break;
+              case 2:
+                // Lógica para a opção 3
+                break;
+            }
+          },
+        ),
       ),
       body: Center(
         child: FractionallySizedBox(
