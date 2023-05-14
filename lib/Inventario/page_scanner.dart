@@ -103,13 +103,8 @@ as passa para a API para enviar.*/
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 63, 70, 73),
+        centerTitle: true,
         title: Text('Envio de Leituras'),
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: () {
-            // Lógica para abrir o menu
-          },
-        ),
       ),
       body: Center(
         child: Form(
