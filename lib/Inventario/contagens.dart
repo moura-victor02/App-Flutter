@@ -59,21 +59,48 @@ class _ContagemState extends State<Contagem> {
           itemBuilder: (BuildContext context) => <PopupMenuEntry>[
             const PopupMenuItem(
               value: 0,
-              child: Text('Opção 1'),
+              child: Text(
+                'Opção 1',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                  fontFamily: 'Roboto',
+                ),
+              ),
             ),
             const PopupMenuItem(
               value: 1,
-              child: Text('Opção 2'),
+              child: Text(
+                'Opção 2',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                  fontFamily: 'Roboto',
+                ),
+              ),
             ),
             const PopupMenuItem(
               value: 2,
-              child: Text('Opção 3'),
+              child: Text(
+                'Opção 3',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                  fontFamily: 'Roboto',
+                ),
+              ),
             ),
           ],
           onSelected: (value) {
             switch (value) {
               case 0:
-                Navigator.pushNamed(context, '/novaTela');
+                // Lógica para a opção 1
                 break;
               case 1:
                 // Lógica para a opção 2
