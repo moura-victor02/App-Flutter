@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
     },
   ];
 
-//responsável por navegar para a rota especificada no parâmetro route//
+//responsável por navegar para a rota especificada no parâmetro route. Ela recebe uma string que representa o nome da rota//
   void _navigateToRoute(String route) {
     Navigator.pushNamed(context, route);
   }
