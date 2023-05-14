@@ -25,19 +25,19 @@ class _ContagemState extends State<Contagem> {
     {
       'text': 'Contagem 1',
       'icon': Icons.inventory,
-      'color': Colors.blue,
+      'color': Color.fromARGB(255, 63, 70, 73),
       'textColor': Colors.white,
     },
     {
       'text': 'Contagem 2',
       'icon': Icons.inventory,
-      'color': Colors.blue,
+      'color': Color.fromARGB(255, 63, 70, 73),
       'textColor': Colors.white,
     },
     {
       'text': 'Contagem 3',
       'icon': Icons.inventory,
-      'color': Colors.blue,
+      'color': Color.fromARGB(255, 63, 70, 73),
       'textColor': Colors.white,
     },
   ];
@@ -52,6 +52,7 @@ class _ContagemState extends State<Contagem> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 63, 70, 73),
         title: Text('Contagem'),
         centerTitle: true,
       ),
@@ -104,7 +105,7 @@ class _ContagemState extends State<Contagem> {
                         children: [
                           Icon(
                             buttons[index]['icon'],
-                            color: Colors.white,
+                            color: Colors.red,
                             size: 40,
                           ),
                           SizedBox(width: 16),

@@ -102,6 +102,7 @@ as passa para a API para enviar.*/
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 63, 70, 73),
         title: Text('Envio de Leituras'),
         leading: IconButton(
           icon: Icon(Icons.menu),
@@ -118,11 +119,11 @@ as passa para a API para enviar.*/
             children: [
               CircleAvatar(
                 radius: 20.0,
-                backgroundColor: Colors.blue,
+                backgroundColor: Color.fromARGB(255, 63, 70, 73),
                 child: Text(
                   _barcodeController.text,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.red,
                     fontSize: 20.0,
                   ),
                 ),
@@ -185,7 +186,12 @@ as passa para a API para enviar.*/
                     height: 80,
                     child: ElevatedButton(
                       onPressed: scanBarcode,
-                      child: Icon(Icons.qr_code, color: Colors.white, size: 48),
+                      child: Icon(Icons.qr_code, color: Colors.red, size: 48),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 63, 70, 73),
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(width: 20),
@@ -194,7 +200,12 @@ as passa para a API para enviar.*/
                     height: 80,
                     child: ElevatedButton(
                       onPressed: sendDataToProtheus,
-                      child: Icon(Icons.save, color: Colors.white, size: 48),
+                      child: Icon(Icons.save, color: Colors.red, size: 48),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 63, 70, 73),
+                        ),
+                      ),
                     ),
                   ),
                 ],

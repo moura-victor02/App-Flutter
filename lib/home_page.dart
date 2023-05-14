@@ -11,59 +11,90 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 63, 70, 73),
         title: Text('Gerenciamento'),
         centerTitle: true,
       ),
-      body: Center(
-        child: FractionallySizedBox(
-          widthFactor:
-              0.8, // define a largura do botão como 80% da largura disponível na tela
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Contagem(),
+      body: Row(
+        children: [
+          Expanded(
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: FractionallySizedBox(
+                widthFactor: 0.97,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Contagem(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    height: 135,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 63, 70, 73),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Icon(
+                          Icons.inventory,
+                          color: Colors.red,
+                          size: 53,
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          child: Text(
+                            'Contabilizador de Inventário',
+                            style: TextStyle(fontSize: 14, color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              );
-            },
-            child: Container(
-              height: 80,
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.inventory,
-                    color: Colors.white,
-                    size: 47,
-                  ),
-                  SizedBox(width: 8),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Contabilizador de',
-                        style: TextStyle(fontSize: 17, color: Colors.white),
-                      ),
-                      Text(
-                        'Inventário',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ],
               ),
             ),
           ),
-        ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.topRight,
+              child: FractionallySizedBox(
+                widthFactor: 0.97,
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    height: 135,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 63, 70, 73),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Icon(
+                          Icons.help_outline,
+                          color: Colors.red,
+                          size: 53,
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          child: Text(
+                            'Lista de Produtos',
+                            style: TextStyle(fontSize: 14, color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
