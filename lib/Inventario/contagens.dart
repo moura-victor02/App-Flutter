@@ -60,7 +60,7 @@ class _ContagemState extends State<Contagem> {
             const PopupMenuItem(
               value: 0,
               child: Text(
-                'Opção 1',
+                'Diferença de contagem',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black,
@@ -73,7 +73,7 @@ class _ContagemState extends State<Contagem> {
             const PopupMenuItem(
               value: 1,
               child: Text(
-                'Opção 2',
+                'Produtos não contados',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black,
@@ -83,7 +83,7 @@ class _ContagemState extends State<Contagem> {
                 ),
               ),
             ),
-            const PopupMenuItem(
+            /*const PopupMenuItem(
               value: 2,
               child: Text(
                 'Opção 3',
@@ -95,7 +95,7 @@ class _ContagemState extends State<Contagem> {
                   fontFamily: 'Roboto',
                 ),
               ),
-            ),
+            ),*/
           ],
           onSelected: (value) {
             switch (value) {
@@ -105,9 +105,9 @@ class _ContagemState extends State<Contagem> {
               case 1:
                 // Lógica para a opção 2
                 break;
-              case 2:
+              /*case 2:
                 // Lógica para a opção 3
-                break;
+                break;*/
             }
           },
         ),
