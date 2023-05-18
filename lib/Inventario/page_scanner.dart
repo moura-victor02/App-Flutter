@@ -113,7 +113,19 @@ as passa para a API para enviar.*/
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 63, 70, 73),
         centerTitle: true,
-        title: Text('Envio de Leituras'),
+        title: Container(
+          child: CircleAvatar(
+            radius: 20.0,
+            backgroundColor: Colors.red,
+            child: Text(
+              _barcodeController.text,
+              style: TextStyle(
+                color: Color.fromARGB(255, 63, 70, 73),
+                fontSize: 20.0,
+              ),
+            ),
+          ),
+        ),
       ),
       body: Center(
         child: Form(
@@ -121,22 +133,17 @@ as passa para a API para enviar.*/
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircleAvatar(
-                radius: 20.0,
-                backgroundColor: Color.fromARGB(255, 63, 70, 73),
+              Container(
+                padding: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey,
+                    width: 1.0,
+                  ),
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
                 child: Text(
                   _codeController.text,
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 20.0,
-                  ),
-                ),
-              ),
-              CircleAvatar(
-                radius: 20.0,
-                backgroundColor: Color.fromARGB(255, 63, 70, 73),
-                child: Text(
-                  _barcodeController.text,
                   style: TextStyle(
                     color: Colors.red,
                     fontSize: 20.0,
