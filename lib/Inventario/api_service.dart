@@ -2,12 +2,23 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+class ApiObject {
+  final String code;
+  // final String description;
+  // final String amount;
+
+  ApiObject({
+    required this.code,
+    /*required this.description, required this.amount*/
+  });
+}
+
 class ApiService {
   final String apiUrl =
-      'http://192.168.0.16:83/rest/SREST001****'; //adicionar o local de fato//
-  static const String failedHostLookupMessage = 'Failed host lookup';
+      'http://192.168.0.16:83/rest/SREST001'; //adicionar o local de fato//
+  static const String failedHostLookupMessage = 'Falha na busca do host';
 
-  Future<void> sendContagemData(String contagem, String endereco,
+  Future<ApiObject> sendContagemData(String contagem, String endereco,
       String codigoProduto, String quantidade) async {
     try {
       final jsonData = jsonEncode({
@@ -27,17 +38,28 @@ class ApiService {
       );
       if (response.statusCode == 200) {
         print('Dados do código de barras enviados com sucesso.');
+        final responseObject = jsonDecode(response.body);
+        return ApiObject(
+          code: responseObject['code'],
+          //description: responseObject['description'],
+          //amount: responseObject['amount'],
+        );
       } else {
         print('Erro ao enviar os dados do código de barras.');
+        throw Exception('Erro ao enviar os dados do código de barras.');
       }
     } on SocketException catch (e) {
       print('Erro de socket: $e');
+      throw Exception('Erro de socket: $e');
     } on HttpException catch (e) {
       print('Erro de HTTP: $e');
+      throw Exception('Erro de HTTP: $e');
     } on FormatException catch (e) {
       print('Formato inválido: $e');
+      throw Exception('Formato inválido: $e');
     } catch (e) {
       print('Erro inesperado: $e');
+      throw Exception('Erro inesperado: $e');
     }
   }
 }

@@ -7,10 +7,15 @@ import 'api_service.dart';
   O campo cancelButtonText é uma string que é usada como o texto do botão Cancelar quando a digitalização é iniciada.
   */
 class BarcodeScannerPage extends StatefulWidget {
+  final ApiObject apiObject; //
   final int barcodeNumber;
   final ApiService apiService;
   final String cancelButtonText = 'Cancelar';
-  BarcodeScannerPage({required this.apiService, required this.barcodeNumber});
+  BarcodeScannerPage({
+    required this.apiService,
+    required this.barcodeNumber,
+    required this.apiObject,
+  });
 
   @override
   _BarcodeScannerPageState createState() => _BarcodeScannerPageState();
@@ -28,6 +33,7 @@ class CodigoData {
 /*Ele define quatro controladores de texto para os campos de entrada de contagem, endereço, código
  do produto e quantidade*/
 class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
+  final _codeController = TextEditingController();
   final _barcodeController = TextEditingController();
   final _enderecoController = TextEditingController();
   final _codigoProdutoController = TextEditingController();
@@ -74,6 +80,8 @@ as passa para a API para enviar.*/
           .sendContagemData(contagem, endereco, codigoProduto, quantidade);
 
       setState(() {
+        _codeController.text = widget.apiObject.code;
+        _codeController.clear();
         _enderecoController.clear();
         _codigoProdutoController.clear();
         _quantidadeController.clear();
@@ -91,6 +99,7 @@ as passa para a API para enviar.*/
 
   @override
   void dispose() {
+    _codeController.dispose();
     _barcodeController.dispose();
     _enderecoController.dispose();
     _codigoProdutoController.dispose();
@@ -112,6 +121,17 @@ as passa para a API para enviar.*/
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              CircleAvatar(
+                radius: 20.0,
+                backgroundColor: Color.fromARGB(255, 63, 70, 73),
+                child: Text(
+                  _codeController.text,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 20.0,
+                  ),
+                ),
+              ),
               CircleAvatar(
                 radius: 20.0,
                 backgroundColor: Color.fromARGB(255, 63, 70, 73),
