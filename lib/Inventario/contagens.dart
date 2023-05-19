@@ -9,8 +9,8 @@ class Contagem extends StatefulWidget {
 
 class _ContagemState extends State<Contagem> {
   void sendNumber(BuildContext context, int index) {
-    String code = '';
-    // String description = '';
+    String code = '1';
+    String description = '';
     // String amount = '';
     Navigator.push(
       context,
@@ -19,7 +19,8 @@ class _ContagemState extends State<Contagem> {
           barcodeNumber: index + 1, // número do botão clicado (1, 2 ou 3)
           apiService: ApiService(),
           apiObject: ApiObject(
-            code: code, /*description: description, amount: amount*/
+            code: code,
+            description: description, /* amount: amount*/
           ),
         ),
       ),

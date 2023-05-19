@@ -33,6 +33,7 @@ class CodigoData {
 /*Ele define quatro controladores de texto para os campos de entrada de contagem, endereço, código
  do produto e quantidade*/
 class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
+  final _descriptionController = TextEditingController();
   final _codeController = TextEditingController();
   final _barcodeController = TextEditingController();
   final _enderecoController = TextEditingController();
@@ -81,6 +82,8 @@ as passa para a API para enviar.*/
 
       setState(() {
         _codeController.text = widget.apiObject.code;
+        _descriptionController.text = widget.apiObject.description;
+        _descriptionController.clear();
         _codeController.clear();
         _enderecoController.clear();
         _codigoProdutoController.clear();
@@ -99,7 +102,8 @@ as passa para a API para enviar.*/
 
   @override
   void dispose() {
-    _codeController.dispose();
+    _descriptionController.dispose();
+    _codeController.text;
     _barcodeController.dispose();
     _enderecoController.dispose();
     _codigoProdutoController.dispose();
@@ -133,22 +137,66 @@ as passa para a API para enviar.*/
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                padding: EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 1.0,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    child: Text(
+                      _codeController.text,
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 20.0,
+                      ),
+                    ),
                   ),
-                  borderRadius: BorderRadius.circular(4.0),
-                ),
-                child: Text(
-                  _codeController.text,
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 20.0,
+                  /*SizedBox(width: 8.0), // Espaço entre os dois containers
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    child: Text(
+                      _descriptionController.text.length <= 10
+                          ? _descriptionController.text
+                          : _descriptionController.text.substring(0, 10),
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 20.0,
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(width: 8.0),
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    child: Text(
+                      'quant',
+                      // _codeController.text,
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  ),*/
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),

@@ -4,12 +4,13 @@ import 'dart:convert';
 
 class ApiObject {
   final String code;
-  // final String description;
+  final String description;
   // final String amount;
 
   ApiObject({
     required this.code,
-    /*required this.description, required this.amount*/
+    required this.description,
+    /*required this.amount*/
   });
 }
 
@@ -41,7 +42,7 @@ class ApiService {
         final responseObject = jsonDecode(response.body);
         return ApiObject(
           code: responseObject['code'],
-          //description: responseObject['description'],
+          description: responseObject['description'],
           //amount: responseObject['amount'],
         );
       } else {
