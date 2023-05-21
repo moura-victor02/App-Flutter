@@ -1,26 +1,29 @@
 import 'dart:io';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class ApiObject {
   final String code;
   final String description;
-  // final String amount;
+  final String amount;
 
   ApiObject({
     required this.code,
     required this.description,
-    /*required this.amount*/
+    required this.amount,
   });
 }
 
 class ApiService {
-  final String apiUrl =
-      'http://192.168.0.16:83/rest/SREST001'; //adicionar o local de fato//
+  final String apiUrl = 'http://192.168.0.16:83/rest/SREST001';
   static const String failedHostLookupMessage = 'Falha na busca do host';
 
-  Future<ApiObject> sendContagemData(String contagem, String endereco,
-      String codigoProduto, String quantidade) async {
+  Future<ApiObject> sendContagemData(
+    String contagem,
+    String endereco,
+    String codigoProduto,
+    String quantidade,
+  ) async {
     try {
       final jsonData = jsonEncode({
         'Contagem': contagem,
@@ -28,22 +31,24 @@ class ApiService {
         'Codigo': codigoProduto,
         'Quantidade': quantidade
       });
+
       final response = await http.post(
         Uri.parse(apiUrl),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'basic ' +
-              base64.encode(utf8.encode('Enzo Victor' + ':' + 'J#102424j'))
+              base64.encode(utf8.encode('Enzo Victor' + ':' + 'J#102424j')),
         },
         body: jsonData,
       );
+
       if (response.statusCode == 200) {
         print('Dados do código de barras enviados com sucesso.');
         final responseObject = jsonDecode(response.body);
         return ApiObject(
           code: responseObject['code'],
           description: responseObject['description'],
-          //amount: responseObject['amount'],
+          amount: responseObject['amount'],
         );
       } else {
         print('Erro ao enviar os dados do código de barras.');
