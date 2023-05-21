@@ -7,10 +7,11 @@ import 'api_service.dart';
   O campo cancelButtonText é uma string que é usada como o texto do botão Cancelar quando a digitalização é iniciada.
   */
 class BarcodeScannerPage extends StatefulWidget {
-  final ApiObject apiObject; //
+  final ApiObject apiObject;
   final int barcodeNumber;
   final ApiService apiService;
   final String cancelButtonText = 'Cancelar';
+
   BarcodeScannerPage({
     required this.apiService,
     required this.barcodeNumber,
@@ -21,7 +22,6 @@ class BarcodeScannerPage extends StatefulWidget {
   _BarcodeScannerPageState createState() => _BarcodeScannerPageState();
 }
 
-//  Classe que possui propriedades para o endereço, código do produto e quantidade  //
 class CodigoData {
   final String endereco;
   final String codigoProduto;
@@ -30,9 +30,8 @@ class CodigoData {
   CodigoData(this.endereco, this.codigoProduto, this.quantidade);
 }
 
-/*Ele define quatro controladores de texto para os campos de entrada de contagem, endereço, código
- do produto e quantidade*/
 class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
+  final _amountController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _codeController = TextEditingController();
   final _barcodeController = TextEditingController();
@@ -42,6 +41,40 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
   final _formKey = GlobalKey<FormState>();
 
   CodigoData _codigoData = CodigoData('', '', '');
+
+  @override
+  void initState() {
+    super.initState();
+    _barcodeController.text = widget.barcodeNumber.toString();
+    _enderecoController.addListener(updateCodigoData);
+    _codigoProdutoController.addListener(updateCodigoData);
+    _quantidadeController.addListener(updateCodigoData);
+    /* _codeController.text = '222222222222';
+    _descriptionController.text = 'opakmdmwodjwionwv';
+    _amountController.text = '165465165';*/
+  }
+
+  void updateCodigoData() {
+    setState(() {
+      _codigoData = CodigoData(
+        _enderecoController.text,
+        _codigoProdutoController.text,
+        _quantidadeController.text,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _amountController.dispose();
+    _descriptionController.dispose();
+    _codeController.dispose();
+    _barcodeController.dispose();
+    _enderecoController.dispose();
+    _codigoProdutoController.dispose();
+    _quantidadeController.dispose();
+    super.dispose();
+  }
 
   Future<void> scanBarcode() async {
     String barcodeData = await FlutterBarcodeScanner.scanBarcode(
@@ -58,7 +91,6 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
       String quantidade = barcodeData.substring(11);
 
       setState(() {
-        // instância da classe CodigoData, atualiza sempre que os dados do código de barras forem lidos//
         _codigoData = CodigoData(endereco, codigoProduto, quantidade);
         _enderecoController.text = endereco;
         _codigoProdutoController.text = codigoProduto;
@@ -77,38 +109,57 @@ as passa para a API para enviar.*/
       String codigoProduto = _codigoData.codigoProduto;
       String quantidade = _codigoData.quantidade;
 
-      await widget.apiService
-          .sendContagemData(contagem, endereco, codigoProduto, quantidade);
+      await widget.apiService.sendContagemData(
+        contagem,
+        endereco,
+        codigoProduto,
+        quantidade,
+      );
 
       setState(() {
-        _codeController.text = widget.apiObject.code;
-        _descriptionController.text = widget.apiObject.description;
+        _amountController.clear();
         _descriptionController.clear();
         _codeController.clear();
         _enderecoController.clear();
         _codigoProdutoController.clear();
         _quantidadeController.clear();
+        /*_codeController.text = '258858589';
+        _descriptionController.text = 'ola, saobao sao soa k';
+        _amountController.text = 'dksfsklfmskl';*/
+        _codeController.text = widget.apiObject.amount;
+        _descriptionController.text = widget.apiObject.description;
+        _amountController.text = widget.apiObject.amount;
       });
     }
   }
 
 /*Usado para inicializar o valor do _barcodeController com o número do código de barras recebido como
    parâmetro no construtor da classe BarcodeScannerPage*/
-  @override
-  void initState() {
-    super.initState();
-    _barcodeController.text = widget.barcodeNumber.toString();
+  Widget _buildInfoContainer(String text, Color textColor) {
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.grey,
+          width: 1.0,
+        ),
+        borderRadius: BorderRadius.circular(4.0),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: textColor,
+          fontSize: 15.0,
+        ),
+      ),
+    );
   }
 
-  @override
-  void dispose() {
-    _descriptionController.dispose();
-    _codeController.text;
-    _barcodeController.dispose();
-    _enderecoController.dispose();
-    _codigoProdutoController.dispose();
-    _quantidadeController.dispose();
-    super.dispose();
+  String _getDescriptionText() {
+    final description = _descriptionController.text;
+    return description.length <= 10
+        ? description
+        : description.substring(0, 10);
   }
 
   @override
@@ -132,122 +183,152 @@ as passa para a API para enviar.*/
         ),
       ),
       body: Center(
-        child: Form(
-          key: _formKey,
+        child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(8.0),
+              Container(
+                padding: EdgeInsets.only(top: 3.0),
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Container(
                     decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey,
-                        width: 1.0,
-                      ),
+                      color: Color.fromARGB(255, 63, 70, 73),
                       borderRadius: BorderRadius.circular(4.0),
                     ),
-                    child: Text(
-                      _codeController.text,
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 20.0,
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Último produto enviado:',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Color.fromARGB(255, 63, 70, 73),
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: _buildInfoContainer(
+                                  _codeController.text,
+                                  Colors.red,
+                                ),
+                              ),
+                              SizedBox(width: 8.0),
+                              Expanded(
+                                child: _buildInfoContainer(
+                                  _getDescriptionText(),
+                                  Colors.red,
+                                ),
+                              ),
+                              SizedBox(width: 8.0),
+                              Expanded(
+                                child: _buildInfoContainer(
+                                  _amountController.text,
+                                  Colors.red,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  /*SizedBox(width: 8.0), // Espaço entre os dois containers
-                  Container(
-                    padding: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    child: Text(
-                      _descriptionController.text.length <= 10
-                          ? _descriptionController.text
-                          : _descriptionController.text.substring(0, 10),
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 8.0),
-                  Container(
-                    padding: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    child: Text(
-                      'quant',
-                      // _codeController.text,
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                  ),*/
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
-                  controller: _enderecoController,
-                  decoration: InputDecoration(
-                    labelText: 'Endereço',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor, insira o endereço';
-                    }
-                    return null;
-                  },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
-                  controller: _codigoProdutoController,
-                  decoration: InputDecoration(
-                    labelText: 'Código do Produto',
-                    border: OutlineInputBorder(),
+              SizedBox(height: 30),
+              Container(
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 63, 70, 73),
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(12.0),
+                  child: Text(
+                    'Realize a leitura:',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 13.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor, insira o código do produto';
-                    }
-                    return null;
-                  },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
-                  controller: _quantidadeController,
-                  decoration: InputDecoration(
-                    labelText: 'Quantidade',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor, insira a quantidade';
-                    }
-                    return null;
-                  },
+              SizedBox(height: 20),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: TextFormField(
+                        controller: _enderecoController,
+                        decoration: InputDecoration(
+                          labelText: 'Endereço',
+                          border: OutlineInputBorder(),
+                          counterText: '',
+                        ),
+                        maxLength: 3,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor, insira o endereço';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: TextFormField(
+                        controller: _codigoProdutoController,
+                        decoration: InputDecoration(
+                          labelText: 'Código do Produto',
+                          border: OutlineInputBorder(),
+                          counterText: '',
+                        ),
+                        maxLength: 8,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor, insira o código do produto';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: TextFormField(
+                        controller: _quantidadeController,
+                        decoration: InputDecoration(
+                          labelText: 'Quantidade',
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor, insira a quantidade';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
