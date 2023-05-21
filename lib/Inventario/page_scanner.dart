@@ -49,9 +49,9 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
     _enderecoController.addListener(updateCodigoData);
     _codigoProdutoController.addListener(updateCodigoData);
     _quantidadeController.addListener(updateCodigoData);
-    /* _codeController.text = '222222222222';
+    _codeController.text = '12345678';
     _descriptionController.text = 'opakmdmwodjwionwv';
-    _amountController.text = '165465165';*/
+    _amountController.text = '165465165';
   }
 
   void updateCodigoData() {
@@ -143,7 +143,7 @@ as passa para a API para enviar.*/
           color: Colors.grey,
           width: 1.0,
         ),
-        borderRadius: BorderRadius.circular(4.0),
+        borderRadius: BorderRadius.circular(5.0),
       ),
       child: Text(
         text,
@@ -187,7 +187,7 @@ as passa para a API para enviar.*/
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.only(top: 3.0),
+                padding: EdgeInsets.only(top: 0.0),
                 alignment: Alignment.topCenter,
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
@@ -205,7 +205,7 @@ as passa para a API para enviar.*/
                             'Último produto enviado:',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 18.0,
+                              fontSize: 15.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -249,7 +249,7 @@ as passa para a API para enviar.*/
                   ),
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 25),
               Container(
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 63, 70, 73),
