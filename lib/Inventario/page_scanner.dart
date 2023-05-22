@@ -49,9 +49,9 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
     _enderecoController.addListener(updateCodigoData);
     _codigoProdutoController.addListener(updateCodigoData);
     _quantidadeController.addListener(updateCodigoData);
-    /*_codeController.text = '12345678';
-    _descriptionController.text = 'opakmdmwodjwionwv';
-    _amountController.text = '165465165';*/
+    /*_codeController.text = '11111111';
+    _descriptionController.text = 'aaaaaaaaaa';
+    _amountController.text = '111111111';*/
   }
 
   void updateCodigoData() {
@@ -109,12 +109,12 @@ as passa para a API para enviar.*/
       String codigoProduto = _codigoData.codigoProduto;
       String quantidade = _codigoData.quantidade;
 
-      await widget.apiService.sendContagemData(
+      /*await widget.apiService.sendContagemData(
         contagem,
         endereco,
         codigoProduto,
         quantidade,
-      );
+      );*/
 
       setState(() {
         _amountController.clear();
@@ -123,12 +123,12 @@ as passa para a API para enviar.*/
         _enderecoController.clear();
         _codigoProdutoController.clear();
         _quantidadeController.clear();
-        /*_codeController.text = '258858589';
-        _descriptionController.text = 'ola, saobao sao soa k';
-        _amountController.text = 'dksfsklfmskl';*/
-        _codeController.text = widget.apiObject.amount;
+        _codeController.text = codigoProduto;
+        _descriptionController.text = 'Exemple description';
+        _amountController.text = quantidade;
+        /*_codeController.text = widget.apiObject.amount;
         _descriptionController.text = widget.apiObject.description;
-        _amountController.text = widget.apiObject.amount;
+        _amountController.text = widget.apiObject.amount;*/
       });
     }
   }
@@ -137,11 +137,12 @@ as passa para a API para enviar.*/
    parâmetro no construtor da classe BarcodeScannerPage*/
   Widget _buildInfoContainer(String text, Color textColor) {
     return Container(
+      height: 50,
       padding: EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.grey,
-          width: 1.0,
+          width: 1,
         ),
         borderRadius: BorderRadius.circular(5.0),
       ),
@@ -157,9 +158,9 @@ as passa para a API para enviar.*/
 
   String _getDescriptionText() {
     final description = _descriptionController.text;
-    return description.length <= 10
+    return description.length <= 20
         ? description
-        : description.substring(0, 10);
+        : description.substring(0, 20);
   }
 
   @override
@@ -186,65 +187,107 @@ as passa para a API para enviar.*/
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                padding: EdgeInsets.only(top: 0.0),
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 63, 70, 73),
-                      borderRadius: BorderRadius.circular(4.0),
+              Padding(
+                padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.1),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Último produto enviado:',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 17.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            'Último produto enviado:',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
+                child: Container(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 63, 70, 73),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(
+                            8.0), // Espaçamento interno para o container pai
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    'Codigo:',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 7.8),
+                                Expanded(
+                                  child: Text(
+                                    'Descrição:',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 7.8),
+                                Expanded(
+                                  child: Text(
+                                    'Quantidade:',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color.fromARGB(255, 63, 70, 73),
-                              width: 1.0,
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Color.fromARGB(255, 63, 70, 73),
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(4.0),
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: _buildInfoContainer(
+                                      _codeController.text,
+                                      Colors.red,
+                                    ),
+                                  ),
+                                  SizedBox(width: 8.0),
+                                  Expanded(
+                                    child: _buildInfoContainer(
+                                      _getDescriptionText(),
+                                      Colors.red,
+                                    ),
+                                  ),
+                                  SizedBox(width: 8.0),
+                                  Expanded(
+                                    child: _buildInfoContainer(
+                                      _amountController.text,
+                                      Colors.red,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: _buildInfoContainer(
-                                  _codeController.text,
-                                  Colors.red,
-                                ),
-                              ),
-                              SizedBox(width: 8.0),
-                              Expanded(
-                                child: _buildInfoContainer(
-                                  _getDescriptionText(),
-                                  Colors.red,
-                                ),
-                              ),
-                              SizedBox(width: 8.0),
-                              Expanded(
-                                child: _buildInfoContainer(
-                                  _amountController.text,
-                                  Colors.red,
-                                ),
-                              ),
-                            ],
-                          ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -351,11 +394,36 @@ as passa para a API para enviar.*/
                     height: 80,
                     child: ElevatedButton(
                       onPressed: sendDataToProtheus,
-                      child: Icon(Icons.save, color: Colors.red, size: 48),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                           Color.fromARGB(255, 63, 70, 73),
                         ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 0.0),
+                            child:
+                                Icon(Icons.save, color: Colors.red, size: 50),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                top: 0.0,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Salvar',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
