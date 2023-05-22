@@ -49,9 +49,9 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
     _enderecoController.addListener(updateCodigoData);
     _codigoProdutoController.addListener(updateCodigoData);
     _quantidadeController.addListener(updateCodigoData);
-    _codeController.text = '12345678';
+    /*_codeController.text = '12345678';
     _descriptionController.text = 'opakmdmwodjwionwv';
-    _amountController.text = '165465165';
+    _amountController.text = '165465165';*/
   }
 
   void updateCodigoData() {
