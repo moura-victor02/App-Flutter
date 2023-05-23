@@ -124,7 +124,7 @@ as passa para a API para enviar.*/
         _codigoProdutoController.clear();
         _quantidadeController.clear();
         _codeController.text = codigoProduto;
-        _descriptionController.text = 'Exemple description';
+        _descriptionController.text = 'Exemple description of';
         _amountController.text = quantidade;
         /*_codeController.text = widget.apiObject.amount;
         _descriptionController.text = widget.apiObject.description;
@@ -137,30 +137,32 @@ as passa para a API para enviar.*/
    parâmetro no construtor da classe BarcodeScannerPage*/
   Widget _buildInfoContainer(String text, Color textColor) {
     return Container(
-      height: 50,
-      padding: EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.grey,
-          width: 1,
+        height: 55,
+        padding: EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.grey,
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(5.0),
         ),
-        borderRadius: BorderRadius.circular(5.0),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: textColor,
-          fontSize: 15.0,
-        ),
-      ),
-    );
+        child: Align(
+          alignment: Alignment.center,
+          child: Text(
+            text,
+            style: TextStyle(
+              color: textColor,
+              fontSize: 15.0,
+            ),
+          ),
+        ));
   }
 
   String _getDescriptionText() {
     final description = _descriptionController.text;
-    return description.length <= 20
+    return description.length <= 22
         ? description
-        : description.substring(0, 20);
+        : description.substring(0, 22);
   }
 
   @override
@@ -183,254 +185,271 @@ as passa para a API para enviar.*/
           ),
         ),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.1),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Último produto enviado:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Último produto enviado:',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
-                child: Container(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 63, 70, 73),
-                        borderRadius: BorderRadius.circular(5.0),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 63, 70, 73),
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Codigo:',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                          ),
+                          SizedBox(width: 7.8),
+                          Expanded(
+                            child: Text(
+                              'Descrição:',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                          ),
+                          SizedBox(width: 7.8),
+                          Expanded(
+                            child: Text(
+                              'Quantidade:',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                          ),
+                        ],
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.all(
-                            8.0), // Espaçamento interno para o container pai
-                        child: Column(
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Color.fromARGB(255, 63, 70, 73),
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                        child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    'Codigo:',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 7.8),
-                                Expanded(
-                                  child: Text(
-                                    'Descrição:',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 7.8),
-                                Expanded(
-                                  child: Text(
-                                    'Quantidade:',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Color.fromARGB(255, 63, 70, 73),
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(4.0),
+                            Expanded(
+                              child: _buildInfoContainer(
+                                _codeController.text,
+                                Colors.red,
                               ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: _buildInfoContainer(
-                                      _codeController.text,
-                                      Colors.red,
-                                    ),
-                                  ),
-                                  SizedBox(width: 8.0),
-                                  Expanded(
-                                    child: _buildInfoContainer(
-                                      _getDescriptionText(),
-                                      Colors.red,
-                                    ),
-                                  ),
-                                  SizedBox(width: 8.0),
-                                  Expanded(
-                                    child: _buildInfoContainer(
-                                      _amountController.text,
-                                      Colors.red,
-                                    ),
-                                  ),
-                                ],
+                            ),
+                            SizedBox(width: 8.0),
+                            Expanded(
+                              child: _buildInfoContainer(
+                                _getDescriptionText(),
+                                Colors.red,
+                              ),
+                            ),
+                            SizedBox(width: 8.0),
+                            Expanded(
+                              child: _buildInfoContainer(
+                                _amountController.text,
+                                Colors.red,
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),
-              SizedBox(height: 25),
-              Container(
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 63, 70, 73),
-                  borderRadius: BorderRadius.circular(4.0),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Text(
-                    'Realize a leitura:',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 13.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+            ),
+            SizedBox(height: 33),
+            Container(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 63, 70, 73),
+                borderRadius: BorderRadius.circular(4.0),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Text(
+                  'Realize a leitura:',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              SizedBox(height: 20),
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: TextFormField(
-                        controller: _enderecoController,
-                        decoration: InputDecoration(
-                          labelText: 'Endereço',
-                          border: OutlineInputBorder(),
-                          counterText: '',
-                        ),
-                        maxLength: 3,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor, insira o endereço';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: TextFormField(
-                        controller: _codigoProdutoController,
-                        decoration: InputDecoration(
-                          labelText: 'Código do Produto',
-                          border: OutlineInputBorder(),
-                          counterText: '',
-                        ),
-                        maxLength: 8,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor, insira o código do produto';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: TextFormField(
-                        controller: _quantidadeController,
-                        decoration: InputDecoration(
-                          labelText: 'Quantidade',
-                          border: OutlineInputBorder(),
-                        ),
-                        keyboardType: TextInputType.number,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor, insira a quantidade';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+            ),
+            SizedBox(height: 28),
+            Form(
+              key: _formKey,
+              child: Column(
                 children: [
-                  SizedBox(
-                    width: 80,
-                    height: 80,
-                    child: ElevatedButton(
-                      onPressed: scanBarcode,
-                      child: Icon(Icons.qr_code, color: Colors.red, size: 48),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(255, 63, 70, 73),
-                        ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextFormField(
+                      controller: _enderecoController,
+                      decoration: InputDecoration(
+                        labelText: 'Endereço',
+                        border: OutlineInputBorder(),
+                        counterText: '',
                       ),
+                      maxLength: 3,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor, insira o endereço';
+                        }
+                        return null;
+                      },
                     ),
                   ),
-                  SizedBox(width: 20),
-                  SizedBox(
-                    width: 80,
-                    height: 80,
-                    child: ElevatedButton(
-                      onPressed: sendDataToProtheus,
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(255, 63, 70, 73),
-                        ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextFormField(
+                      controller: _codigoProdutoController,
+                      decoration: InputDecoration(
+                        labelText: 'Código do Produto',
+                        border: OutlineInputBorder(),
+                        counterText: '',
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 0.0),
-                            child:
-                                Icon(Icons.save, color: Colors.red, size: 50),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                top: 0.0,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Salvar',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                      maxLength: 8,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor, insira o código do produto';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextFormField(
+                      controller: _quantidadeController,
+                      decoration: InputDecoration(
+                        labelText: 'Quantidade',
+                        border: OutlineInputBorder(),
                       ),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor, insira a quantidade';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+            SizedBox(height: 45),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 85,
+                  height: 85,
+                  child: ElevatedButton(
+                    onPressed: scanBarcode,
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        Color.fromARGB(255, 63, 70, 73),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            bottom: 0.0,
+                          ),
+                          child:
+                              Icon(Icons.qr_code, color: Colors.red, size: 58),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: 0.0,
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Leitura',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20),
+                SizedBox(
+                  width: 85,
+                  height: 85,
+                  child: ElevatedButton(
+                    onPressed: sendDataToProtheus,
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        Color.fromARGB(255, 63, 70, 73),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 0.0),
+                          child: Icon(Icons.save, color: Colors.red, size: 58),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: 0.0,
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Salvar',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
