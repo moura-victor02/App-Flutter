@@ -370,13 +370,16 @@ as passa para a API para enviar.*/
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: 85,
-                  height: 85,
+                  width: 86,
+                  height: 86,
                   child: ElevatedButton(
                     onPressed: scanBarcode,
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
                         Color.fromARGB(255, 63, 70, 73),
+                      ),
+                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                        EdgeInsets.symmetric(vertical: 4.0),
                       ),
                     ),
                     child: Column(
@@ -387,12 +390,12 @@ as passa para a API para enviar.*/
                             bottom: 0.0,
                           ),
                           child:
-                              Icon(Icons.qr_code, color: Colors.red, size: 58),
+                              Icon(Icons.qr_code, color: Colors.red, size: 53),
                         ),
                         Expanded(
                           child: Padding(
                             padding: EdgeInsets.only(
-                              top: 0.0,
+                              bottom: 0.0,
                             ),
                             child: Center(
                               child: Text(
@@ -411,13 +414,16 @@ as passa para a API para enviar.*/
                 ),
                 SizedBox(width: 20),
                 SizedBox(
-                  width: 85,
-                  height: 85,
+                  width: 86,
+                  height: 86,
                   child: ElevatedButton(
                     onPressed: sendDataToProtheus,
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
                         Color.fromARGB(255, 63, 70, 73),
+                      ),
+                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                        EdgeInsets.symmetric(vertical: 4.0),
                       ),
                     ),
                     child: Column(
@@ -425,7 +431,8 @@ as passa para a API para enviar.*/
                       children: [
                         Padding(
                           padding: EdgeInsets.only(bottom: 0.0),
-                          child: Icon(Icons.save, color: Colors.red, size: 58),
+                          child: Icon(Icons.arrow_upward,
+                              color: Colors.red, size: 53),
                         ),
                         Expanded(
                           child: Padding(

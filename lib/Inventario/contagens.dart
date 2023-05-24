@@ -60,62 +60,48 @@ class _ContagemState extends State<Contagem> {
         backgroundColor: Color.fromARGB(255, 63, 70, 73),
         title: Text('Contagem'),
         centerTitle: true,
-        leading: PopupMenuButton(
-          itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-            const PopupMenuItem(
-              value: 0,
-              child: Text(
-                'Diferença de contagem',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                  fontFamily: 'Roboto',
+        actions: [
+          PopupMenuButton<int>(
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
+              const PopupMenuItem<int>(
+                value: 0,
+                child: Text(
+                  'Diferença de contagem',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    fontFamily: 'Roboto',
+                  ),
                 ),
               ),
-            ),
-            const PopupMenuItem(
-              value: 1,
-              child: Text(
-                'Produtos não contados',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                  fontFamily: 'Roboto',
+              const PopupMenuItem<int>(
+                value: 1,
+                child: Text(
+                  'Produtos não contados',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    fontFamily: 'Roboto',
+                  ),
                 ),
               ),
-            ),
-            /*const PopupMenuItem(
-              value: 2,
-              child: Text(
-                'Opção 3',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                  fontFamily: 'Roboto',
-                ),
-              ),
-            ),*/
-          ],
-          onSelected: (value) {
-            switch (value) {
-              case 0:
-                // Lógica para a opção 1
-                break;
-              case 1:
-                // Lógica para a opção 2
-                break;
-              /*case 2:
-                // Lógica para a opção 3
-                break;*/
-            }
-          },
-        ),
+            ],
+            onSelected: (int value) {
+              switch (value) {
+                case 0:
+                  // Lógica para a opção "Diferença de contagem"
+                  break;
+                case 1:
+                  // Lógica para a opção "Produtos não contados"
+                  break;
+              }
+            },
+          ),
+        ],
       ),
       body: Center(
         child: FractionallySizedBox(
