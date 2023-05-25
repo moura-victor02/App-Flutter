@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'api_service.dart';
+import 'package:just_audio_cache/just_audio_cache.dart';
+import 'package:just_audio/just_audio.dart';
 
 /*classe que estende StatefulWidget, que representa a pagina de digitalização do codigo de barras.
   O campo apiService é uma instância da classe ApiService
@@ -11,6 +13,7 @@ class BarcodeScannerPage extends StatefulWidget {
   final int barcodeNumber;
   final ApiService apiService;
   final String cancelButtonText = 'Cancelar';
+  final audioPlayer = AudioPlayer();
 
   BarcodeScannerPage({
     required this.apiService,
@@ -39,6 +42,8 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
   final _codigoProdutoController = TextEditingController();
   final _quantidadeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  AudioPlayer _audioPlayer = AudioPlayer();
+  String filePath = 'assets/beep.wav';
 
   CodigoData _codigoData = CodigoData('', '', '');
 
@@ -49,9 +54,11 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
     _enderecoController.addListener(updateCodigoData);
     _codigoProdutoController.addListener(updateCodigoData);
     _quantidadeController.addListener(updateCodigoData);
-    /*_codeController.text = '11111111';
-    _descriptionController.text = 'aaaaaaaaaa';
-    _amountController.text = '111111111';*/
+    _loadSound();
+  }
+
+  void _loadSound() async {
+    _audioPlayer = await audioPlayer().play('assets/beep.wav');
   }
 
   void updateCodigoData() {
@@ -73,6 +80,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
     _enderecoController.dispose();
     _codigoProdutoController.dispose();
     _quantidadeController.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
@@ -83,12 +91,16 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
       true,
       ScanMode.BARCODE,
     );
+
 /*são extraídas as substrings que representam o endereço, o código do produto e a quantidade, respectivamente.
  O método substring é usado para extrair essas informações a partir da string barcodeData*/
     if (barcodeData != '-1') {
       String endereco = barcodeData.substring(0, 3);
       String codigoProduto = barcodeData.substring(3, 11);
       String quantidade = barcodeData.substring(11);
+
+      await audioPlayer.setAsset('assets/beep.wav');
+      await audioPlayer.play();
 
       setState(() {
         _codigoData = CodigoData(endereco, codigoProduto, quantidade);
