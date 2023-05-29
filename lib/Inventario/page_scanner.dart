@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'api_service.dart';
-import 'package:just_audio_cache/just_audio_cache.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 /*classe que estende StatefulWidget, que representa a pagina de digitalização do codigo de barras.
   O campo apiService é uma instância da classe ApiService
@@ -43,7 +42,6 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
   final _quantidadeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   AudioPlayer _audioPlayer = AudioPlayer();
-  String filePath = 'assets/beep.wav';
 
   CodigoData _codigoData = CodigoData('', '', '');
 
@@ -54,12 +52,10 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
     _enderecoController.addListener(updateCodigoData);
     _codigoProdutoController.addListener(updateCodigoData);
     _quantidadeController.addListener(updateCodigoData);
-    _loadSound();
+    audioCache.load('assets/beep.wav');
   }
 
-  void _loadSound() async {
-    _audioPlayer = await audioPlayer().play('assets/beep.wav');
-  }
+
 
   void updateCodigoData() {
     setState(() {
@@ -98,9 +94,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
       String endereco = barcodeData.substring(0, 3);
       String codigoProduto = barcodeData.substring(3, 11);
       String quantidade = barcodeData.substring(11);
-
-      await audioPlayer.setAsset('assets/beep.wav');
-      await audioPlayer.play();
+      audioCache.play('beep.wav');
 
       setState(() {
         _codigoData = CodigoData(endereco, codigoProduto, quantidade);
@@ -120,6 +114,7 @@ as passa para a API para enviar.*/
       String endereco = _codigoData.endereco;
       String codigoProduto = _codigoData.codigoProduto;
       String quantidade = _codigoData.quantidade;
+      
 
       /*await widget.apiService.sendContagemData(
         contagem,
