@@ -32,7 +32,8 @@ dependencies:
     sdk: flutter
   http: ^0.13.6
   flutter_barcode_scanner: ^2.0.0
-  audioplayers: ^4.1.0
+  just_audio: ^0.9.33
+  
   
 
   # The following adds the Cupertino Icons font to your application.
@@ -70,7 +71,7 @@ flutter:
   assets:
     - assets/img/icon.png
     - assets/img/icon2.png
-    - assets/beep.wav
+    - assets/audios/beep.wav
   
      
 
