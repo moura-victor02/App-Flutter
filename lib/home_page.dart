@@ -12,14 +12,15 @@ class ButtonData {
   final Color color;
   final Color textColor;
   final String route;
+  final String padding;
 
-  ButtonData({
-    required this.text,
-    required this.icon,
-    required this.color,
-    required this.textColor,
-    required this.route,
-  });
+  ButtonData(
+      {required this.text,
+      required this.icon,
+      required this.color,
+      required this.textColor,
+      required this.route,
+      required this.padding});
 }
 
 //Lista de strings referente as paginas que estão definas as rotas dentro do MaterialApp//
@@ -34,6 +35,10 @@ final List<String> routes = [
 
 //Cada botão é um mapa com várias propriedades, como texto, ícone, cor de fundo, cor do texto e rota a ser navegada ao clicar no botão//
 class _HomePageState extends State<HomePage> {
+  static const Color primaryColor = Color.fromARGB(255, 63, 70, 73);
+  static const Color iconColor = Colors.red;
+  static const TextStyle buttonTextStyle = TextStyle(fontSize: 14);
+
   List<Map<String, dynamic>> buttons = [
     {
       'text': 'Contabilizador de Inventário',
@@ -41,37 +46,38 @@ class _HomePageState extends State<HomePage> {
       'color': Color.fromARGB(255, 63, 70, 73),
       'textColor': Colors.white,
       'route': routes[0],
+      'padding': Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 50))
     },
     {
-      'text': '...',
+      'text': 'under construction',
       'icon': Icons.help_outline,
       'color': Color.fromARGB(255, 63, 70, 73),
       'textColor': Colors.white,
       //'route': routes[1],
     },
     {
-      'text': '...',
+      'text': 'under construction',
       'icon': Icons.help_outline,
       'color': Color.fromARGB(255, 63, 70, 73),
       'textColor': Colors.white,
       //'route': routes[2],
     },
     {
-      'text': '...',
+      'text': 'under construction',
       'icon': Icons.help_outline,
       'color': Color.fromARGB(255, 63, 70, 73),
       'textColor': Colors.white,
       //'route': routes[3],
     },
     {
-      'text': '...',
+      'text': 'under construction',
       'icon': Icons.help_outline,
       'color': Color.fromARGB(255, 63, 70, 73),
       'textColor': Colors.white,
       //'route': routes[4],
     },
     {
-      'text': '...',
+      'text': 'under construction',
       'icon': Icons.help_outline,
       'color': Color.fromARGB(255, 63, 70, 73),
       'textColor': Colors.white,
@@ -88,41 +94,47 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 63, 70, 73),
+        backgroundColor: primaryColor,
         title: Text('Gerenciamento'),
         centerTitle: true,
       ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        padding: EdgeInsets.all(10),
-        children: buttons.map((button) {
+      body: GridView.builder(
+        physics: BouncingScrollPhysics(), // Para uma rolagem suave
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 24,
+        ),
+        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        itemCount: buttons.length,
+        itemBuilder: (context, index) {
+          final button = buttons[index];
           return GestureDetector(
-            onTap: () => {_navigateToRoute(button['route'])},
+            onTap: () => _navigateToRoute(button['route']),
             child: Container(
               decoration: BoxDecoration(
                 color: button['color'],
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment
+                    .center, // Alinha os elementos verticalmente ao centro
                 children: [
                   Icon(
                     button['icon'],
-                    color: Colors.red,
-                    size: 55,
+                    color: iconColor,
+                    size: 72,
                   ),
-                  SizedBox(height: 33),
+                  SizedBox(height: 15),
                   Text(
                     button['text'],
-                    style: TextStyle(fontSize: 11, color: button['textColor']),
+                    style: buttonTextStyle.copyWith(color: button['textColor']),
                   ),
                 ],
               ),
             ),
           );
-        }).toList(),
+        },
       ),
     );
   }
