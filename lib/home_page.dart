@@ -37,7 +37,7 @@ final List<String> routes = [
 class _HomePageState extends State<HomePage> {
   static const Color primaryColor = Color.fromARGB(255, 63, 70, 73);
   static const Color iconColor = Colors.red;
-  static const TextStyle buttonTextStyle = TextStyle(fontSize: 14);
+  static const TextStyle buttonTextStyle = TextStyle(fontSize: 13);
 
   List<Map<String, dynamic>> buttons = [
     {
@@ -95,42 +95,141 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
-        title: Text('Gerenciamento'),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
+        ),
+        title: Text(
+          'Gerenciamento',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
         centerTitle: true,
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            Container(
+              height: 95, // Defina a altura desejada para o DrawerHeader
+              child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                ),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/img/icon4.png',
+                      width: 100,
+                      height: 100,
+                    ),
+                    SizedBox(width: 20),
+                    Spacer(),
+                    IconButton(
+                      icon: Icon(Icons.close),
+                      color: Colors.white,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            ListTile(
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 25.0, vertical: 10.0),
+              title: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Opção 1',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Icon(Icons.expand_more),
+                ],
+              ),
+              onTap: () {
+                // Lógica para tratar a seleção da opção 1
+              },
+            ),
+            ListTile(
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 25.0, vertical: 10.0),
+              title: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Opção 1',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Icon(Icons.expand_more),
+                ],
+              ),
+              onTap: () {
+                // Lógica para tratar a seleção da opção 1
+              },
+            ),
+          ],
+        ),
+      ),
       body: GridView.builder(
-        physics: BouncingScrollPhysics(), // Para uma rolagem suave
+        physics: BouncingScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 10,
-          mainAxisSpacing: 24,
+          mainAxisSpacing: 10,
         ),
-        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        padding: EdgeInsets.all(10),
         itemCount: buttons.length,
         itemBuilder: (context, index) {
           final button = buttons[index];
           return GestureDetector(
             onTap: () => _navigateToRoute(button['route']),
-            child: Container(
-              decoration: BoxDecoration(
-                color: button['color'],
+            child: Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment
-                    .center, // Alinha os elementos verticalmente ao centro
-                children: [
-                  Icon(
-                    button['icon'],
-                    color: iconColor,
-                    size: 72,
-                  ),
-                  SizedBox(height: 15),
-                  Text(
-                    button['text'],
-                    style: buttonTextStyle.copyWith(color: button['textColor']),
-                  ),
-                ],
+              child: Container(
+                decoration: BoxDecoration(
+                  color: button['color'],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      button['icon'],
+                      color: iconColor,
+                      size: 55,
+                    ),
+                    SizedBox(height: 15),
+                    Text(
+                      button['text'],
+                      style: buttonTextStyle.copyWith(
+                        color: button['textColor'],
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
             ),
           );
