@@ -145,14 +145,14 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               contentPadding:
-                  EdgeInsets.symmetric(horizontal: 25.0, vertical: 10.0),
+                  EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
               title: Row(
                 children: [
                   Expanded(
                     child: Text(
-                      'Opção 1',
+                      'Contabilizador de Inventário',
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -166,14 +166,98 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               contentPadding:
-                  EdgeInsets.symmetric(horizontal: 25.0, vertical: 10.0),
+                  EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
               title: Row(
                 children: [
                   Expanded(
                     child: Text(
-                      'Opção 1',
+                      'Contabilizador de Inventário',
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Icon(Icons.expand_more),
+                ],
+              ),
+              onTap: () {
+                // Lógica para tratar a seleção da opção 1
+              },
+            ),
+            ListTile(
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+              title: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Contabilizador de Inventário',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Icon(Icons.expand_more),
+                ],
+              ),
+              onTap: () {
+                // Lógica para tratar a seleção da opção 1
+              },
+            ),
+            ListTile(
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+              title: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Contabilizador de Inventário',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Icon(Icons.expand_more),
+                ],
+              ),
+              onTap: () {
+                // Lógica para tratar a seleção da opção 1
+              },
+            ),
+            ListTile(
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+              title: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Contabilizador de Inventário',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Icon(Icons.expand_more),
+                ],
+              ),
+              onTap: () {
+                // Lógica para tratar a seleção da opção 1
+              },
+            ),
+            ListTile(
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+              title: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Contabilizador de Inventário',
+                      style: TextStyle(
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
