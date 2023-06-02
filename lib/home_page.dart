@@ -5,22 +5,27 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-//Classe que define dados do botão, ou seja, strings referentes a construção//
+class CustomListTile {
+  final String title;
+  final Function onTap;
+
+  CustomListTile({required this.title, required this.onTap});
+}
+
 class ButtonData {
   final String text;
   final IconData icon;
   final Color color;
   final Color textColor;
   final String route;
-  final String padding;
 
-  ButtonData(
-      {required this.text,
-      required this.icon,
-      required this.color,
-      required this.textColor,
-      required this.route,
-      required this.padding});
+  ButtonData({
+    required this.text,
+    required this.icon,
+    required this.color,
+    required this.textColor,
+    required this.route,
+  });
 }
 
 //Lista de strings referente as paginas que estão definas as rotas dentro do MaterialApp//
@@ -38,6 +43,22 @@ class _HomePageState extends State<HomePage> {
   static const Color primaryColor = Color.fromARGB(255, 63, 70, 73);
   static const Color iconColor = Colors.red;
   static const TextStyle buttonTextStyle = TextStyle(fontSize: 13);
+  static const Color listtilecolor = Colors.white;
+  static const Color iconlisttilecolor = Colors.black;
+  static const EdgeInsets paddinglisttitle = EdgeInsets.fromLTRB(18, 5, 30, 5);
+  static const EdgeInsets paddingadditionaltile =
+      EdgeInsets.fromLTRB(25, 3, 30, 3);
+
+  List<String> listTiles = [
+    'Contabilizador de Inventário',
+    'Under construction',
+    'Under construction',
+    'Under construction',
+    'Under construction',
+    'Under construction',
+  ];
+  bool showAdditionalTile = false;
+  bool showAdditionalTile2 = false;
 
   List<Map<String, dynamic>> buttons = [
     {
@@ -46,7 +67,6 @@ class _HomePageState extends State<HomePage> {
       'color': Color.fromARGB(255, 63, 70, 73),
       'textColor': Colors.white,
       'route': routes[0],
-      'padding': Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 50))
     },
     {
       'text': 'under construction',
@@ -114,162 +134,121 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            Container(
-              height: 95, // Defina a altura desejada para o DrawerHeader
-              child: DrawerHeader(
-                decoration: BoxDecoration(
-                  color: primaryColor,
+        child: Container(
+          color: primaryColor,
+          child: ListView(
+            children: [
+              Container(
+                color: primaryColor,
+                height: 95,
+                child: DrawerHeader(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/img/icon4.png',
+                      ),
+                      SizedBox(width: 110),
+                      Spacer(),
+                      IconButton(
+                        icon: Icon(Icons.close),
+                        color: Colors.black,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                child: Row(
+              ),
+              ListTile(
+                contentPadding: paddinglisttitle,
+                title: Row(
                   children: [
-                    Image.asset(
-                      'assets/img/icon4.png',
-                      width: 100,
-                      height: 100,
+                    Expanded(
+                      child: Text(
+                        listTiles[0],
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: listtilecolor,
+                        ),
+                      ),
                     ),
-                    SizedBox(width: 20),
-                    Spacer(),
-                    IconButton(
-                      icon: Icon(Icons.close),
-                      color: Colors.white,
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
+                    Icon(Icons.expand_more, color: iconlisttilecolor),
                   ],
                 ),
+                onTap: () {
+                  setState(() {
+                    showAdditionalTile = !showAdditionalTile;
+                  });
+                },
               ),
-            ),
-            ListTile(
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
-              title: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Contabilizador de Inventário',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+              if (showAdditionalTile)
+                ListTile(
+                  contentPadding: paddingadditionaltile,
+                  title: Text(
+                    'Under construction',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: listtilecolor,
                     ),
                   ),
-                  Icon(Icons.expand_more),
-                ],
-              ),
-              onTap: () {
-                // Lógica para tratar a seleção da opção 1
-              },
-            ),
-            ListTile(
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
-              title: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Contabilizador de Inventário',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                  trailing: Icon(
+                    Icons.expand_more,
+                    color: iconlisttilecolor,
+                  ),
+                  onTap: () {
+                    // Lógica para tratar o novo item
+                    //Navigator.pop(context);
+                  },
+                ),
+              ListTile(
+                contentPadding: paddinglisttitle,
+                title: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        listTiles[1],
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: listtilecolor,
+                        ),
                       ),
                     ),
-                  ),
-                  Icon(Icons.expand_more),
-                ],
+                    Icon(Icons.expand_more, color: iconlisttilecolor),
+                  ],
+                ),
+                onTap: () {
+                  setState(() {
+                    showAdditionalTile2 = !showAdditionalTile2;
+                  });
+                },
               ),
-              onTap: () {
-                // Lógica para tratar a seleção da opção 1
-              },
-            ),
-            ListTile(
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
-              title: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Contabilizador de Inventário',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+              if (showAdditionalTile2)
+                ListTile(
+                  contentPadding: paddingadditionaltile,
+                  title: Text(
+                    'Under construction',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: listtilecolor,
                     ),
                   ),
-                  Icon(Icons.expand_more),
-                ],
-              ),
-              onTap: () {
-                // Lógica para tratar a seleção da opção 1
-              },
-            ),
-            ListTile(
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
-              title: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Contabilizador de Inventário',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  trailing: Icon(
+                    Icons.expand_more,
+                    color: iconlisttilecolor,
                   ),
-                  Icon(Icons.expand_more),
-                ],
-              ),
-              onTap: () {
-                // Lógica para tratar a seleção da opção 1
-              },
-            ),
-            ListTile(
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
-              title: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Contabilizador de Inventário',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Icon(Icons.expand_more),
-                ],
-              ),
-              onTap: () {
-                // Lógica para tratar a seleção da opção 1
-              },
-            ),
-            ListTile(
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
-              title: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Contabilizador de Inventário',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Icon(Icons.expand_more),
-                ],
-              ),
-              onTap: () {
-                // Lógica para tratar a seleção da opção 1
-              },
-            ),
-          ],
+                  onTap: () {
+                    // Lógica para tratar o novo item
+                    //Navigator.pop(context);
+                  },
+                ),
+            ],
+          ),
         ),
       ),
       body: GridView.builder(
