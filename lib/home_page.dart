@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
   static const Color iconlisttilecolor = Colors.black;
   static const EdgeInsets paddinglisttitle = EdgeInsets.fromLTRB(18, 5, 30, 5);
   static const EdgeInsets paddingadditionaltile =
-      EdgeInsets.fromLTRB(25, 3, 30, 3);
+      EdgeInsets.fromLTRB(28, 3, 30, 3);
 
   List<String> listTiles = [
     'Contabilizador de Inventário',
@@ -187,13 +187,24 @@ class _HomePageState extends State<HomePage> {
               if (showAdditionalTile)
                 ListTile(
                   contentPadding: paddingadditionaltile,
-                  title: Text(
-                    'Under construction',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: listtilecolor,
-                    ),
+                  title: Row(
+                    children: [
+                      Icon(
+                        Icons.inventory,
+                        color: Colors.red,
+                      ),
+                      SizedBox(
+                          width:
+                              8), // Ajuste o valor do SizedBox para controlar o espaçamento
+                      Text(
+                        'Contagem',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: listtilecolor,
+                        ),
+                      ),
+                    ],
                   ),
                   trailing: Icon(
                     Icons.expand_more,
@@ -201,7 +212,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   onTap: () {
                     // Lógica para tratar o novo item
-                    //Navigator.pop(context);
+                    // Navigator.pop(context);
                   },
                 ),
               ListTile(
