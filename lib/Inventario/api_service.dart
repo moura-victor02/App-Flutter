@@ -15,23 +15,11 @@ class ApiObject {
   });
 }
 
-class ApiObject2 {
-  final String code;
-  final String description;
-  final String amount;
-
-  ApiObject2({
-    required this.code,
-    required this.description,
-    required this.amount,
-  });
-}
-
 class ApiService {
   final String apiUrl = 'http://localhost:3000/apiObjects';
   static const String failedHostLookupMessage = 'Falha na busca do host';
 
-  Future<ApiObject2> sendContagemData(
+  Future<ApiObject> sendContagemData(
     String contagem,
     String endereco,
     String codigoProduto,
@@ -58,11 +46,11 @@ class ApiService {
       if (response.statusCode == 200) {
         print('Dados do código de barras enviados com sucesso.');
         final responseObject = jsonDecode(response.body);
-        return ApiObject2(
+        return ApiObject(
           code: responseObject['code'],
           description: responseObject['description'],
           amount: responseObject['amount'],
-        ); // Chama a função getLastValue
+        );
       } else {
         print('Erro ao enviar os dados do código de barras.');
         throw Exception('Erro ao enviar os dados do código de barras.');
@@ -79,26 +67,6 @@ class ApiService {
     } catch (e) {
       print('Erro inesperado: $e');
       throw Exception('Erro inesperado: $e');
-    }
-  }
-
-  Future<ApiObject> _getLastValue() async {
-    final baseUrl = 'http://localhost:3000';
-    final response = await http.get(Uri.parse('$baseUrl/apiObjects/lastValue'));
-
-    if (response.statusCode == 200) {
-      final jsonResponse = jsonDecode(response.body);
-      final code = jsonResponse['code'] ?? '';
-      final description = jsonResponse['description'] ?? '';
-      final amount = jsonResponse['amount']?.toString() ?? '0';
-
-      return ApiObject(
-        code: code,
-        description: description,
-        amount: amount,
-      );
-    } else {
-      throw Exception('Falha ao obter o último valor');
     }
   }
 }
