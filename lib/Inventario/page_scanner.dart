@@ -112,12 +112,12 @@ as passa para a API para enviar.*/
       String codigoProduto = _codigoData.codigoProduto;
       String quantidade = _codigoData.quantidade;
 
-      /*await widget.apiService.sendContagemData(
+      await widget.apiService.sendContagemData(
         contagem,
         endereco,
         codigoProduto,
         quantidade,
-      );*/
+      );
 
       setState(() {
         _amountController.clear();
@@ -126,12 +126,12 @@ as passa para a API para enviar.*/
         _enderecoController.clear();
         _codigoProdutoController.clear();
         _quantidadeController.clear();
-        _codeController.text = codigoProduto;
+        /* _codeController.text = codigoProduto;
         _descriptionController.text = 'Exemple description of';
-        _amountController.text = quantidade;
-        /*_codeController.text = widget.apiObject.amount;
+        _amountController.text = quantidade;*/
+        _codeController.text = widget.apiObject.code;
         _descriptionController.text = widget.apiObject.description;
-        _amountController.text = widget.apiObject.amount;*/
+        _amountController.text = widget.apiObject.amount;
       });
     }
   }
