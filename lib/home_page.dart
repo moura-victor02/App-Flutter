@@ -147,8 +147,8 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Image.asset(
                         'assets/img/CTIC.png',
-                        width: 10,
-                        height: 10,
+                        height: 90,
+                        width: 90,
                       ),
                       SizedBox(width: 110),
                       Spacer(),

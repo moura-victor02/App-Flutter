@@ -8,7 +8,7 @@
     <application
         android:label="Gestão"
         android:name="${applicationName}"
-        android:icon="@mipmap/icon2">
+        android:icon="@mipmap/ctic">
         <activity
             android:name=".MainActivity"
             android:exported="true"
