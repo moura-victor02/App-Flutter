@@ -16,7 +16,7 @@ class ApiObject {
 }
 
 class ApiService {
-  final String apiUrl = 'http://localhost:3000/apiObjects';
+  final String apiUrl = 'http://192.168.100.16:83/rest/SREST001';
   static const String failedHostLookupMessage = 'Falha na busca do host';
 
   Future<ApiObject> sendContagemData(
@@ -38,7 +38,7 @@ class ApiService {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'basic ' +
-              base64.encode(utf8.encode('Enzo Victor' + ':' + 'J#102424j'))
+              base64.encode(utf8.encode('Enzo Victor' + ':' + 'J#102424e'))
         },
         body: jsonData,
       );

@@ -146,7 +146,9 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                        'assets/img/icon4.png',
+                        'assets/img/CTIC.png',
+                        width: 10,
+                        height: 10,
                       ),
                       SizedBox(width: 110),
                       Spacer(),
