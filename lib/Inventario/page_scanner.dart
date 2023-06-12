@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'api_service.dart';
@@ -8,20 +10,21 @@ import 'package:just_audio/just_audio.dart';
   O campo apiService é uma instância da classe ApiService
   O campo cancelButtonText é uma string que é usada como o texto do botão Cancelar quando a digitalização é iniciada.
   */
-class BarcodeScannerPage extends StatefulWidget {
+
+class barcodeScannerPage extends StatefulWidget {
   final ApiObject apiObject;
   final int barcodeNumber;
   final ApiService apiService;
   final String cancelButtonText = 'Cancelar';
 
-  BarcodeScannerPage({
+  barcodeScannerPage({
     required this.apiService,
     required this.barcodeNumber,
     required this.apiObject,
   });
 
   @override
-  _BarcodeScannerPageState createState() => _BarcodeScannerPageState();
+  _barcodeScannerPageState createState() => _barcodeScannerPageState();
 }
 
 class CodigoData {
@@ -32,7 +35,7 @@ class CodigoData {
   CodigoData(this.endereco, this.codigoProduto, this.quantidade);
 }
 
-class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
+class _barcodeScannerPageState extends State<barcodeScannerPage> {
   final _amountController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _codeController = TextEditingController();
