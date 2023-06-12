@@ -1,13 +1,18 @@
+// ignore_for_file: camel_case_types, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:app01/Inventario/page_scanner.dart';
 import 'api_service.dart';
 
-class Contagem extends StatefulWidget {
+class contagem extends StatefulWidget {
+  const contagem({super.key});
+
   @override
   _ContagemState createState() => _ContagemState();
 }
 
-class _ContagemState extends State<Contagem> {
+class _ContagemState extends State<contagem> {
+  static const Color primaryColor = Color.fromARGB(255, 63, 70, 73);
   void sendNumber(BuildContext context, int index) {
     String code = '';
     String description = '';
@@ -15,7 +20,7 @@ class _ContagemState extends State<Contagem> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => BarcodeScannerPage(
+        builder: (context) => barcodeScannerPage(
           barcodeNumber: index + 1, // número do botão clicado (1, 2 ou 3)
           apiService: ApiService(),
           apiObject:
@@ -30,19 +35,19 @@ class _ContagemState extends State<Contagem> {
     {
       'text': 'Contagem 1',
       'icon': Icons.inventory,
-      'color': Color.fromARGB(255, 63, 70, 73),
+      'color': primaryColor,
       'textColor': Colors.white,
     },
     {
       'text': 'Contagem 2',
       'icon': Icons.inventory,
-      'color': Color.fromARGB(255, 63, 70, 73),
+      'color': primaryColor,
       'textColor': Colors.white,
     },
     {
       'text': 'Contagem 3',
       'icon': Icons.inventory,
-      'color': Color.fromARGB(255, 63, 70, 73),
+      'color': primaryColor,
       'textColor': Colors.white,
     },
   ];
@@ -57,7 +62,7 @@ class _ContagemState extends State<Contagem> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 63, 70, 73),
+        backgroundColor: primaryColor,
         title: Text('Contagens'),
         centerTitle: true,
         actions: [

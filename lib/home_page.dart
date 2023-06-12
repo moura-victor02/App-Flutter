@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:app01/Inventario/page_scanner.dart';
 import 'Inventario/api_service.dart';
 
-class HomePage extends StatefulWidget {
+class Homepage extends StatefulWidget {
+  const Homepage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
@@ -24,7 +27,7 @@ void sendNumber(BuildContext context, int buttonNumber) {
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) => BarcodeScannerPage(
+      builder: (context) => barcodeScannerPage(
         barcodeNumber: barcodeNumber,
         apiService: ApiService(),
         apiObject:
@@ -61,7 +64,7 @@ final List<String> routes = [
 ];
 
 //Cada botão é um mapa com várias propriedades, como texto, ícone, cor de fundo, cor do texto e rota a ser navegada ao clicar no botão//
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<Homepage> {
   static const Color primaryColor = Color.fromARGB(255, 63, 70, 73);
   static const Color iconColor = Colors.red;
   static const TextStyle buttonTextStyle = TextStyle(fontSize: 13);
@@ -91,42 +94,42 @@ class _HomePageState extends State<HomePage> {
     {
       'text': 'Contabilizador de Inventário',
       'icon': Icons.inventory,
-      'color': Color.fromARGB(255, 63, 70, 73),
+      'color': primaryColor,
       'textColor': Colors.white,
       'route': routes[0],
     },
     {
       'text': 'under construction1',
       'icon': Icons.help_outline,
-      'color': Color.fromARGB(255, 63, 70, 73),
+      'color': primaryColor,
       'textColor': Colors.white,
       //'route': routes[1],
     },
     {
       'text': 'under construction2',
       'icon': Icons.help_outline,
-      'color': Color.fromARGB(255, 63, 70, 73),
+      'color': primaryColor,
       'textColor': Colors.white,
       //'route': routes[2],
     },
     {
       'text': 'under construction3',
       'icon': Icons.help_outline,
-      'color': Color.fromARGB(255, 63, 70, 73),
+      'color': primaryColor,
       'textColor': Colors.white,
       //'route': routes[3],
     },
     {
       'text': 'under construction4',
       'icon': Icons.help_outline,
-      'color': Color.fromARGB(255, 63, 70, 73),
+      'color': primaryColor,
       'textColor': Colors.white,
       //'route': routes[4],
     },
     {
       'text': 'under construction5',
       'icon': Icons.help_outline,
-      'color': Color.fromARGB(255, 63, 70, 73),
+      'color': primaryColor,
       'textColor': Colors.white,
       //'route': routes[5],
     },
@@ -144,13 +147,13 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: primaryColor,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
           ),
         ),
-        title: Text(
+        title: const Text(
           'Gerenciamento',
           style: TextStyle(
             fontSize: 18,
@@ -169,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                 color: primaryColor,
                 height: 95,
                 child: DrawerHeader(
-                  padding: EdgeInsets.all(0),
+                  padding: const EdgeInsets.all(0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -178,9 +181,9 @@ class _HomePageState extends State<HomePage> {
                         height: 95,
                         width: 95,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       IconButton(
-                        icon: Icon(Icons.close),
+                        icon: const Icon(Icons.close),
                         color: Colors.black,
                         iconSize: 30,
                         onPressed: () {
@@ -198,13 +201,13 @@ class _HomePageState extends State<HomePage> {
                     Expanded(
                         child: Text(
                       listTiles[0],
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: listtilecolor,
                       ),
                     )),
-                    Icon(Icons.expand_more, color: iconlisttilecolor),
+                    const Icon(Icons.expand_more, color: iconlisttilecolor),
                   ],
                 ),
                 onTap: () {
@@ -219,7 +222,7 @@ class _HomePageState extends State<HomePage> {
               if (showAdditionalTile)
                 ListTile(
                   contentPadding: paddingadditionaltile,
-                  title: Row(
+                  title: const Row(
                     children: [
                       Icon(
                         Icons.inventory,
@@ -238,7 +241,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  trailing: Icon(
+                  trailing: const Icon(
                     Icons.expand_more,
                     color: iconlisttilecolor,
                   ),
@@ -253,7 +256,7 @@ class _HomePageState extends State<HomePage> {
               if (showAdditionalTile3)
                 ListTile(
                   contentPadding: paddingadditionaltile3,
-                  title: Row(
+                  title: const Row(
                     children: [
                       CircleAvatar(
                         radius: 13.0,
@@ -284,7 +287,7 @@ class _HomePageState extends State<HomePage> {
               if (showAdditionalTile4)
                 ListTile(
                   contentPadding: paddingadditionaltile3,
-                  title: Row(
+                  title: const Row(
                     children: [
                       CircleAvatar(
                         radius: 13.0,
@@ -315,7 +318,7 @@ class _HomePageState extends State<HomePage> {
               if (showAdditionalTile5)
                 ListTile(
                   contentPadding: paddingadditionaltile3,
-                  title: Row(
+                  title: const Row(
                     children: [
                       CircleAvatar(
                         radius: 13.0,
@@ -350,14 +353,14 @@ class _HomePageState extends State<HomePage> {
                     Expanded(
                       child: Text(
                         listTiles[1],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: listtilecolor,
                         ),
                       ),
                     ),
-                    Icon(Icons.expand_more, color: iconlisttilecolor),
+                    const Icon(Icons.expand_more, color: iconlisttilecolor),
                   ],
                 ),
                 onTap: () {
@@ -369,7 +372,7 @@ class _HomePageState extends State<HomePage> {
               if (showAdditionalTile2)
                 ListTile(
                   contentPadding: paddingadditionaltile,
-                  title: Text(
+                  title: const Text(
                     'Under construction',
                     style: TextStyle(
                       fontSize: 15,
@@ -377,7 +380,7 @@ class _HomePageState extends State<HomePage> {
                       color: listtilecolor,
                     ),
                   ),
-                  trailing: Icon(
+                  trailing: const Icon(
                     Icons.expand_more,
                     color: iconlisttilecolor,
                   ),
@@ -391,13 +394,13 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: GridView.builder(
-        physics: BouncingScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        physics: const BouncingScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
         ),
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         itemCount: buttons.length,
         itemBuilder: (context, index) {
           final button = buttons[index];
@@ -421,7 +424,7 @@ class _HomePageState extends State<HomePage> {
                       color: iconColor,
                       size: 55,
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     Text(
                       button['text'],
                       style: buttonTextStyle.copyWith(

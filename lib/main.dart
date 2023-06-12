@@ -13,8 +13,8 @@ class MyApp extends StatelessWidget {
       title: 'Minha aplicação',
       initialRoute: '/',
       routes: {
-        '/': (context) => HomePage(),
-        '/contagem': (context) => Contagem(),
+        '/': (context) => Homepage(),
+        '/contagem': (context) => contagem(),
         /*'/exemplo1': (context) => Exemplo1(),
         '/exemplo2': (context) => Exemplo2(),
         '/exemplo3': (context) => Exemplo3(),
