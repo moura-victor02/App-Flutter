@@ -58,7 +58,7 @@ class _ContagemState extends State<Contagem> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 63, 70, 73),
-        title: Text('Contagem'),
+        title: Text('Contagens'),
         centerTitle: true,
         actions: [
           PopupMenuButton<int>(

@@ -16,7 +16,7 @@ class ApiObject {
 }
 
 class ApiService {
-  final String apiUrl = 'http://192.168.100.16:83/rest/SREST001';
+  final String apiUrl = 'http://localhost:3000/apiObjects';
   static const String failedHostLookupMessage = 'Falha na busca do host';
 
   Future<ApiObject> sendContagemData(

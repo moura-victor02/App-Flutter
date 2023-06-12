@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:app01/Inventario/page_scanner.dart';
+import 'Inventario/api_service.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,6 +12,26 @@ class CustomListTile {
   final Function onTap;
 
   CustomListTile({required this.title, required this.onTap});
+}
+
+void sendNumber(BuildContext context, int buttonNumber) {
+  String code = '';
+  String description = '';
+  String amount = '';
+
+  int barcodeNumber = buttonNumber;
+
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => BarcodeScannerPage(
+        barcodeNumber: barcodeNumber,
+        apiService: ApiService(),
+        apiObject:
+            ApiObject(code: code, description: description, amount: amount),
+      ),
+    ),
+  );
 }
 
 class ButtonData {
@@ -45,20 +67,25 @@ class _HomePageState extends State<HomePage> {
   static const TextStyle buttonTextStyle = TextStyle(fontSize: 13);
   static const Color listtilecolor = Colors.white;
   static const Color iconlisttilecolor = Colors.black;
-  static const EdgeInsets paddinglisttitle = EdgeInsets.fromLTRB(18, 5, 30, 5);
+  static const EdgeInsets paddinglisttitle = EdgeInsets.fromLTRB(18, 5, 10, 5);
   static const EdgeInsets paddingadditionaltile =
-      EdgeInsets.fromLTRB(28, 3, 30, 3);
+      EdgeInsets.fromLTRB(28, 2, 30, 2);
+  static const EdgeInsets paddingadditionaltile3 =
+      EdgeInsets.fromLTRB(38, 1, 50, 1);
 
   List<String> listTiles = [
     'Contabilizador de Inventário',
-    'Under construction',
-    'Under construction',
-    'Under construction',
-    'Under construction',
-    'Under construction',
+    'Under construction-2',
+    'Under construction-3',
+    'Under construction-4',
+    'Under construction-5',
+    'Under construction-6',
   ];
   bool showAdditionalTile = false;
   bool showAdditionalTile2 = false;
+  bool showAdditionalTile3 = false;
+  bool showAdditionalTile4 = false;
+  bool showAdditionalTile5 = false;
 
   List<Map<String, dynamic>> buttons = [
     {
@@ -142,19 +169,20 @@ class _HomePageState extends State<HomePage> {
                 color: primaryColor,
                 height: 95,
                 child: DrawerHeader(
+                  padding: EdgeInsets.all(0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Image.asset(
-                        'assets/img/CTIC.png',
-                        height: 90,
-                        width: 90,
+                        'assets/img/ctic.png',
+                        height: 95,
+                        width: 95,
                       ),
-                      SizedBox(width: 110),
                       Spacer(),
                       IconButton(
                         icon: Icon(Icons.close),
                         color: Colors.black,
+                        iconSize: 30,
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -168,21 +196,23 @@ class _HomePageState extends State<HomePage> {
                 title: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        listTiles[0],
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: listtilecolor,
-                        ),
+                        child: Text(
+                      listTiles[0],
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: listtilecolor,
                       ),
-                    ),
+                    )),
                     Icon(Icons.expand_more, color: iconlisttilecolor),
                   ],
                 ),
                 onTap: () {
                   setState(() {
                     showAdditionalTile = !showAdditionalTile;
+                    showAdditionalTile3 = false;
+                    showAdditionalTile4 = false;
+                    showAdditionalTile5 = false;
                   });
                 },
               ),
@@ -199,7 +229,7 @@ class _HomePageState extends State<HomePage> {
                           width:
                               8), // Ajuste o valor do SizedBox para controlar o espaçamento
                       Text(
-                        'Contagem',
+                        'Contagens',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -213,8 +243,104 @@ class _HomePageState extends State<HomePage> {
                     color: iconlisttilecolor,
                   ),
                   onTap: () {
-                    // Lógica para tratar o novo item
-                    // Navigator.pop(context);
+                    setState(() {
+                      showAdditionalTile3 = !showAdditionalTile3;
+                      showAdditionalTile4 = !showAdditionalTile4;
+                      showAdditionalTile5 = !showAdditionalTile5;
+                    });
+                  },
+                ),
+              if (showAdditionalTile3)
+                ListTile(
+                  contentPadding: paddingadditionaltile3,
+                  title: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 15.0,
+                        backgroundColor: Colors.red,
+                        child: Text(
+                          '1',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 63, 70, 73),
+                            fontSize: 15.0,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        'Contagem',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: listtilecolor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    sendNumber(context, 1);
+                  },
+                ),
+              if (showAdditionalTile4)
+                ListTile(
+                  contentPadding: paddingadditionaltile3,
+                  title: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 15.0,
+                        backgroundColor: Colors.red,
+                        child: Text(
+                          '2',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 63, 70, 73),
+                            fontSize: 15.0,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        'Contagem',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: listtilecolor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    sendNumber(context, 2);
+                  },
+                ),
+              if (showAdditionalTile5)
+                ListTile(
+                  contentPadding: paddingadditionaltile3,
+                  title: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 15.0,
+                        backgroundColor: Colors.red,
+                        child: Text(
+                          '3',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 63, 70, 73),
+                            fontSize: 15.0,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        'Contagem',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: listtilecolor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    sendNumber(context, 3);
                   },
                 ),
               ListTile(

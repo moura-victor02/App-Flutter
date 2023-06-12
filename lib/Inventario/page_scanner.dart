@@ -126,8 +126,8 @@ as passa para a API para enviar.*/
         _enderecoController.clear();
         _codigoProdutoController.clear();
         _quantidadeController.clear();
-        /* _codeController.text = codigoProduto;
-        _descriptionController.text = 'Exemple description of';
+        _codeController.text = codigoProduto;
+        /*_descriptionController.text = 'Exemple description of';
         _amountController.text = quantidade;*/
         _codeController.text = widget.apiObject.code;
         _descriptionController.text = widget.apiObject.description;
