@@ -3,7 +3,6 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'api_service.dart';
 import 'dart:async';
 import 'package:just_audio/just_audio.dart';
-import 'package:app01/home_page.dart';
 
 /*classe que estende StatefulWidget, que representa a pagina de digitalização do codigo de barras.
   O campo apiService é uma instância da classe ApiService
