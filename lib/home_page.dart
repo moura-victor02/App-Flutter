@@ -256,13 +256,13 @@ class _HomePageState extends State<HomePage> {
                   title: Row(
                     children: [
                       CircleAvatar(
-                        radius: 15.0,
+                        radius: 13.0,
                         backgroundColor: Colors.red,
                         child: Text(
                           '1',
                           style: TextStyle(
                             color: Color.fromARGB(255, 63, 70, 73),
-                            fontSize: 15.0,
+                            fontSize: 14.0,
                           ),
                         ),
                       ),
@@ -287,13 +287,13 @@ class _HomePageState extends State<HomePage> {
                   title: Row(
                     children: [
                       CircleAvatar(
-                        radius: 15.0,
+                        radius: 13.0,
                         backgroundColor: Colors.red,
                         child: Text(
                           '2',
                           style: TextStyle(
                             color: Color.fromARGB(255, 63, 70, 73),
-                            fontSize: 15.0,
+                            fontSize: 14.0,
                           ),
                         ),
                       ),
@@ -318,13 +318,13 @@ class _HomePageState extends State<HomePage> {
                   title: Row(
                     children: [
                       CircleAvatar(
-                        radius: 15.0,
+                        radius: 13.0,
                         backgroundColor: Colors.red,
                         child: Text(
                           '3',
                           style: TextStyle(
                             color: Color.fromARGB(255, 63, 70, 73),
-                            fontSize: 15.0,
+                            fontSize: 14.0,
                           ),
                         ),
                       ),
