@@ -17,13 +17,16 @@ class barcodeScannerPage extends StatefulWidget {
   final ApiService apiService;
   final String cancelButtonText = 'Cancelar';
 
+  // ignore: prefer_const_constructors_in_immutables
   barcodeScannerPage({
+    super.key,
     required this.apiService,
     required this.barcodeNumber,
     required this.apiObject,
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _barcodeScannerPageState createState() => _barcodeScannerPageState();
 }
 
