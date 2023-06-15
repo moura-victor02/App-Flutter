@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:app01/home_page.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +13,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MaterialColor customColor = MaterialColor(0xFF4D5E66, {
+      50: Color(0xFF4D5E66),
+      100: Color(0xFF4D5E66),
+      200: Color(0xFF4D5E66),
+      300: Color(0xFF4D5E66),
+      400: Color(0xFF4D5E66),
+      500: Color(0xFF4D5E66),
+      600: Color(0xFF4D5E66),
+      700: Color(0xFF4D5E66),
+      800: Color(0xFF4D5E66),
+      900: Color(0xFF4D5E66),
+    });
+
     return MaterialApp(
       title: 'Minha aplicação',
       initialRoute: '/',
+      theme: ThemeData(
+        primarySwatch: customColor,
+      ),
       routes: {
         '/': (context) => Homepage(),
         '/contagem': (context) => contagem(),
