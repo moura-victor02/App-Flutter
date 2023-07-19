@@ -24,7 +24,7 @@ class ApiService {
       String codigoProduto, String quantidade, String armazemNumber) async {
     try {
       final jsonData = jsonEncode({
-        'Armazem': null,
+        'Armazem': armazemNumber,
         'Contagem': contagem,
         'Endereco': endereco,
         'Codigo': codigoProduto,
