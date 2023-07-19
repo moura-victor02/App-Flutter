@@ -5,7 +5,9 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'api_service.dart';
 import 'dart:async';
 import 'package:just_audio/just_audio.dart';
+import 'contagens.dart';
 
+import 'api_service.dart';
 /*classe que estende StatefulWidget, que representa a pagina de digitalização do codigo de barras.
   O campo apiService é uma instância da classe ApiService
   O campo cancelButtonText é uma string que é usada como o texto do botão Cancelar quando a digitalização é iniciada.
@@ -15,6 +17,7 @@ class barcodeScannerPage extends StatefulWidget {
   final ApiObject apiObject;
   final int barcodeNumber;
   final ApiService apiService;
+
   final String cancelButtonText = 'Cancelar';
 
   // ignore: prefer_const_constructors_in_immutables
@@ -123,6 +126,7 @@ as passa para a API para enviar.*/
         endereco,
         codigoProduto,
         quantidade,
+        widget.apiObject.armazemNumber,
       );
 
       setState(() {

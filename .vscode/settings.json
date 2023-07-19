@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "C:/Users/enzo/Desktop/appCTIC/App-Flutter/linux"
+    "cmake.sourceDirectory": "C:/Users/enzo/Desktop/appCTIC/App-Flutter/linux",
+    "C_Cpp.errorSquiggles": "disabled"
 }

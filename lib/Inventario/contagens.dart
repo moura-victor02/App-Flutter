@@ -1,17 +1,20 @@
-// ignore_for_file: camel_case_types, prefer_const_constructors, library_private_types_in_public_api
+// ignore_for_file: camel_case_types, prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
 import 'package:app01/Inventario/page_scanner.dart';
 import 'api_service.dart';
 
 class contagem extends StatefulWidget {
-  const contagem({super.key});
+  final String armazemNumber;
+
+  contagem({required this.armazemNumber});
 
   @override
   _ContagemState createState() => _ContagemState();
 }
 
 class _ContagemState extends State<contagem> {
+  final _armazemController = TextEditingController();
   static const Color primaryColor = Color.fromARGB(255, 63, 70, 73);
   void sendNumber(BuildContext context, int index) {
     String code = '';
@@ -23,8 +26,13 @@ class _ContagemState extends State<contagem> {
         builder: (context) => barcodeScannerPage(
           barcodeNumber: index + 1, // número do botão clicado (1, 2 ou 3)
           apiService: ApiService(),
-          apiObject:
-              ApiObject(code: code, description: description, amount: amount),
+          apiObject: ApiObject(
+            code: code,
+            description: description,
+            amount: amount,
+            armazemNumber: widget
+                .armazemNumber, // Acessa o valor de armazemNumber do widget
+          ),
         ),
       ),
     );
@@ -55,7 +63,20 @@ class _ContagemState extends State<contagem> {
   Future<void> sendDataToProtheus(String contagem, String endereco,
       String codigoProduto, String quantidade) async {
     await _apiService.sendContagemData(
-        contagem, endereco, codigoProduto, quantidade);
+        contagem, endereco, codigoProduto, quantidade, widget.armazemNumber);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _armazemController.text = widget.armazemNumber.toString();
+  }
+
+  @override
+  void dispose() {
+    _armazemController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -63,7 +84,35 @@ class _ContagemState extends State<contagem> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
-        title: Text('Contagens'),
+        title: Align(
+          alignment: Alignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Armazém',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                ),
+              ),
+              SizedBox(
+                  width:
+                      8), // Adiciona um espaçamento entre a mensagem e o CircleAvatar
+              CircleAvatar(
+                radius: 20.0,
+                backgroundColor: Colors.red,
+                child: Text(
+                  _armazemController.text,
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 63, 70, 73),
+                    fontSize: 20.0,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
         centerTitle: true,
         actions: [
           PopupMenuButton<int>(

@@ -7,26 +7,24 @@ class ApiObject {
   final String code;
   final String description;
   final String amount;
+  final String armazemNumber;
 
-  ApiObject({
-    required this.code,
-    required this.description,
-    required this.amount,
-  });
+  ApiObject(
+      {required this.code,
+      required this.description,
+      required this.amount,
+      required this.armazemNumber});
 }
 
 class ApiService {
   final String apiUrl = 'http://localhost:3000/apiObjects';
   static const String failedHostLookupMessage = 'Falha na busca do host';
 
-  Future<ApiObject> sendContagemData(
-    String contagem,
-    String endereco,
-    String codigoProduto,
-    String quantidade,
-  ) async {
+  Future<ApiObject> sendContagemData(String contagem, String endereco,
+      String codigoProduto, String quantidade, String armazemNumber) async {
     try {
       final jsonData = jsonEncode({
+        'Armazem': null,
         'Contagem': contagem,
         'Endereco': endereco,
         'Codigo': codigoProduto,
@@ -49,6 +47,7 @@ class ApiService {
           code: responseObject['code'],
           description: responseObject['description'],
           amount: responseObject['amount'],
+          armazemNumber: armazemNumber,
         );
       } else {
         throw Exception('Erro ao enviar os dados do código de barras.');

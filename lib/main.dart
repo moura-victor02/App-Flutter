@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:app01/home_page.dart';
+
 import 'package:flutter/material.dart';
 import 'Inventario/contagens.dart';
 
@@ -34,9 +35,12 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => Homepage(),
-        '/contagem': (context) => contagem(),
-        /*'/exemplo1': (context) => Exemplo1(),
-        '/exemplo2': (context) => Exemplo2(),
+        '/contagem': (context) => contagem(
+              armazemNumber:
+                  ModalRoute.of(context)!.settings.arguments.toString(),
+            ),
+        //   '/agenda': (context) => HomePageAgen(),
+        /*  '/exemplo2': (context) => Exemplo2(),
         '/exemplo3': (context) => Exemplo3(),
         '/exemplo4': (context) => Exemplo4(),
         '/exemplo5': (context) => Exemplo5(),*/

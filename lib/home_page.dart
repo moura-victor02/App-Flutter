@@ -18,12 +18,7 @@ class CustomListTile {
 }
 
 void sendNumber(BuildContext context, int buttonNumber) {
-  String code = '';
-  String description = '';
-  String amount = '';
-
   int barcodeNumber = buttonNumber;
-
   Navigator.push(
     context,
     MaterialPageRoute(
@@ -31,7 +26,7 @@ void sendNumber(BuildContext context, int buttonNumber) {
         barcodeNumber: barcodeNumber,
         apiService: ApiService(),
         apiObject:
-            ApiObject(code: code, description: description, amount: amount),
+            ApiObject(code: '', description: '', amount: '', armazemNumber: ''),
       ),
     ),
   );
@@ -56,7 +51,7 @@ class ButtonData {
 //Lista de strings referente as paginas que estão definas as rotas dentro do MaterialApp//
 final List<String> routes = [
   '/contagem',
-  '/exemplo1',
+  '/agenda',
   '/exemplo2',
   '/exemplo3',
   '/exemplo4',
@@ -65,6 +60,7 @@ final List<String> routes = [
 
 //Cada botão é um mapa com várias propriedades, como texto, ícone, cor de fundo, cor do texto e rota a ser navegada ao clicar no botão//
 class _HomePageState extends State<Homepage> {
+  String numeroArmazem = '';
   static const Color primaryColor = Color.fromARGB(255, 63, 70, 73);
   static const Color iconColor = Colors.red;
   static const TextStyle buttonTextStyle = TextStyle(fontSize: 13);
@@ -78,7 +74,7 @@ class _HomePageState extends State<Homepage> {
 
   List<String> listTiles = [
     'Contabilizador de Inventário',
-    'Under construction-2',
+    'Reservas de Reuniões',
     'Under construction-3',
     'Under construction-4',
     'Under construction-5',
@@ -99,8 +95,8 @@ class _HomePageState extends State<Homepage> {
       'route': routes[0],
     },
     {
-      'text': 'under construction1',
-      'icon': Icons.help_outline,
+      'text': 'Reservas de Reuniõe',
+      'icon': Icons.calendar_today,
       'color': primaryColor,
       'textColor': Colors.white,
       //'route': routes[1],
@@ -137,7 +133,62 @@ class _HomePageState extends State<Homepage> {
 
 //responsável por navegar para a rota especificada no parâmetro route. Ela recebe uma string que representa o nome da rota//
   void _navigateToRoute(String route) {
-    Navigator.pushNamed(context, route);
+    if (route == routes[0]) {
+      showNumberPopup(context, (int number) {
+        Navigator.pushNamed(context, route, arguments: number.toString());
+      });
+    } else {
+      Navigator.pushNamed(context, route, arguments: numeroArmazem);
+    }
+  }
+
+  Future<void> showNumberPopup(
+      BuildContext context, Function(int) onConfirm) async {
+    String armazemNumber = '';
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Digite o número do armazém desejado:'),
+          content: TextField(
+            keyboardType: TextInputType.number,
+            maxLength: 2,
+            onChanged: (value) {
+              if (value.isNotEmpty) {
+                setState(() {
+                  armazemNumber = value;
+                });
+              } else {
+                setState(() {
+                  numeroArmazem = '';
+                });
+              }
+            },
+            decoration: InputDecoration(
+              counterText: '',
+              hintText: 'Número de 2 dígitos',
+            ),
+            style: TextStyle(fontSize: 18),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                onConfirm(int.parse(armazemNumber));
+              },
+              child: Text('Confirmar'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
