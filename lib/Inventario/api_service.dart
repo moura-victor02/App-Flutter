@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class ApiObject {
   final String code;
-  final String description;
+  String description;
   final String amount;
   final String armazemNumber;
 
@@ -18,19 +18,20 @@ class ApiObject {
 
   factory ApiObject.fromJson(Map<String, dynamic> json) {
     return ApiObject(
-      code: json['Codigo'], // Verifique se as chaves do JSON estão corretas
-      description:
-          json['Descricao'], // Verifique se as chaves do JSON estão corretas
-      amount: json['Valor'], // Verifique se as chaves do JSON estão corretas
-      armazemNumber:
-          json['Armazem'], // Verifique se as chaves do JSON estão corretas
+      code: json['Codigo'] ??
+          '', // Provide a default value if the key is not present
+      description: json['Descricao'] ??
+          '', // Provide a default value if the key is not present
+      amount: json['Quantidade']?.toString() ??
+          '', // Provide a default value if the key is not present
+      armazemNumber: json['Armazem'] ??
+          '', // Provide a default value if the key is not present
     );
   }
 }
 
 class ApiService {
-  final String apiUrl = 'http://localhost:3000/apiObjects';
-  static const String failedHostLookupMessage = 'Falha na busca do host';
+  final String apiUrl = 'http://192.168.100.16:83/rest/SREST001';
 
   Future<ApiObject> sendContagemData(
     String contagem,
@@ -60,10 +61,16 @@ class ApiService {
 
       if (response.statusCode == 200) {
         final responseObject = jsonDecode(response.body);
-        final jsonData = responseObject is String
-            ? jsonDecode(responseObject)
-            : responseObject;
-        return ApiObject.fromJson(jsonData);
+
+        // Create an ApiObject with the response data, providing default values for missing keys
+        ApiObject apiObject = ApiObject.fromJson({
+          'Codigo': responseObject['Codigo'] ?? '',
+          'Descricao': responseObject['Descricao'] ?? '',
+          'Quantidade': responseObject['Quantidade']?.toString() ?? '',
+          'Armazem': responseObject['Armazem'] ?? '',
+        });
+
+        return apiObject;
       } else {
         throw Exception('Erro ao enviar os dados do código de barras.');
       }
