@@ -20,13 +20,12 @@ class barcodeScannerPage extends StatefulWidget {
 
   final String cancelButtonText = 'Cancelar';
 
-  // ignore: prefer_const_constructors_in_immutables
   barcodeScannerPage({
-    super.key,
+    Key? key,
     required this.apiService,
     required this.barcodeNumber,
     required this.apiObject,
-  });
+  }) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -61,6 +60,9 @@ class _barcodeScannerPageState extends State<barcodeScannerPage> {
     _enderecoController.addListener(updateCodigoData);
     _codigoProdutoController.addListener(updateCodigoData);
     _quantidadeController.addListener(updateCodigoData);
+    _codeController.text = widget.apiObject.code;
+    _descriptionController.text = widget.apiObject.description;
+    _amountController.text = widget.apiObject.amount;
   }
 
   void updateCodigoData() {
@@ -136,12 +138,9 @@ as passa para a API para enviar.*/
         _enderecoController.clear();
         _codigoProdutoController.clear();
         _quantidadeController.clear();
-        _codeController.text = codigoProduto;
-        /*_descriptionController.text = 'Exemple description of';
-        _amountController.text = quantidade;*/
-        _codeController.text = widget.apiObject.code;
-        _descriptionController.text = widget.apiObject.description;
-        _amountController.text = widget.apiObject.amount;
+        // _codeController.text = codigoProduto;
+        //_descriptionController.text = 'Exemple description of';
+        //_amountController.text = quantidade;
       });
     }
   }

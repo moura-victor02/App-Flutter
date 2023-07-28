@@ -9,26 +9,43 @@ class ApiObject {
   final String amount;
   final String armazemNumber;
 
-  ApiObject(
-      {required this.code,
-      required this.description,
-      required this.amount,
-      required this.armazemNumber});
+  ApiObject({
+    required this.code,
+    required this.description,
+    required this.amount,
+    required this.armazemNumber,
+  });
+
+  factory ApiObject.fromJson(Map<String, dynamic> json) {
+    return ApiObject(
+      code: json['Codigo'], // Verifique se as chaves do JSON estão corretas
+      description:
+          json['Descricao'], // Verifique se as chaves do JSON estão corretas
+      amount: json['Valor'], // Verifique se as chaves do JSON estão corretas
+      armazemNumber:
+          json['Armazem'], // Verifique se as chaves do JSON estão corretas
+    );
+  }
 }
 
 class ApiService {
   final String apiUrl = 'http://localhost:3000/apiObjects';
   static const String failedHostLookupMessage = 'Falha na busca do host';
 
-  Future<ApiObject> sendContagemData(String contagem, String endereco,
-      String codigoProduto, String quantidade, String armazemNumber) async {
+  Future<ApiObject> sendContagemData(
+    String contagem,
+    String endereco,
+    String codigoProduto,
+    String quantidade,
+    String armazemNumber,
+  ) async {
     try {
       final jsonData = jsonEncode({
         'Armazem': armazemNumber,
         'Contagem': contagem,
         'Endereco': endereco,
         'Codigo': codigoProduto,
-        'Quantidade': quantidade
+        'Quantidade': quantidade,
       });
 
       final response = await http.post(
@@ -43,21 +60,13 @@ class ApiService {
 
       if (response.statusCode == 200) {
         final responseObject = jsonDecode(response.body);
-        return ApiObject(
-          code: responseObject['code'],
-          description: responseObject['description'],
-          amount: responseObject['amount'],
-          armazemNumber: armazemNumber,
-        );
+        final jsonData = responseObject is String
+            ? jsonDecode(responseObject)
+            : responseObject;
+        return ApiObject.fromJson(jsonData);
       } else {
         throw Exception('Erro ao enviar os dados do código de barras.');
       }
-    } on SocketException catch (e) {
-      throw Exception('Erro de socket: $e');
-    } on HttpException catch (e) {
-      throw Exception('Erro de HTTP: $e');
-    } on FormatException catch (e) {
-      throw Exception('Formato inválido: $e');
     } catch (e) {
       throw Exception('Erro inesperado: $e');
     }
