@@ -123,25 +123,33 @@ as passa para a API para enviar.*/
       String codigoProduto = _codigoData.codigoProduto;
       String quantidade = _codigoData.quantidade;
 
-      await widget.apiService.sendContagemData(
-        contagem,
-        endereco,
-        codigoProduto,
-        quantidade,
-        widget.apiObject.armazemNumber,
-      );
+      try {
+        // Call the sendContagemData method and wait for the response
+        ApiObject updatedApiObject = await widget.apiService.sendContagemData(
+          contagem,
+          endereco,
+          codigoProduto,
+          quantidade,
+          widget.apiObject.armazemNumber,
+        );
 
-      setState(() {
-        _amountController.clear();
-        _descriptionController.clear();
-        _codeController.clear();
-        _enderecoController.clear();
-        _codigoProdutoController.clear();
-        _quantidadeController.clear();
-        // _codeController.text = codigoProduto;
-        //_descriptionController.text = 'Exemple description of';
-        //_amountController.text = quantidade;
-      });
+        // Update the UI with the received data
+        setState(() {
+          _amountController.clear();
+          _descriptionController.clear();
+          _codeController.clear();
+          _enderecoController.clear();
+          _codigoProdutoController.clear();
+          _quantidadeController.clear();
+
+          _codeController.text = updatedApiObject.code ?? '';
+          _amountController.text = updatedApiObject.amount ?? '';
+          _descriptionController.text = updatedApiObject.description ?? '';
+        });
+      } catch (e) {
+        // Handle exceptions if needed
+        print('Error: $e');
+      }
     }
   }
 
